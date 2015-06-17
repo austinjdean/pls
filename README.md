@@ -19,4 +19,4 @@ Usage:
 
 #### To-do list:
 - (?) switch window focus to newly created browser session
-- makefile to simplify installation (in progress)
+- (?) use Ryan's scripts instead of ant to install
