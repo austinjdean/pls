@@ -14,28 +14,6 @@
 		<delete file="${dest-dir}/${script-name}"/>
 	</target>
 
-	<target name="help">
-		<echo>
-+---------+
-| go Help |
-+---------+
-
-Usage:
-
-go [options] [search terms]
-
-Options:
-
-	-c: open using Chrome
-
-	-f: open using Firefox
-
-Notes:
-
-- search terms do not need to be enclosed in quotes.
-		</echo>
-	</target>
-
 </project>
 
 <!-- Very useful: https://ant.apache.org/manual/Tasks/ -->

@@ -4,6 +4,15 @@ import sys
 import subprocess
 import os
 
+def printHelp():
+	print 'Usage:\n'
+	print 'go [options] [search terms]\n'
+	print 'Options:\n'
+	print '\t-c: open using Chrome\n'
+	print '\t-f: open using Firefox\n'
+	print 'Notes:'
+	print '\t- search terms do not need to be enclosed in quotes.'
+
 query = ''
 browser = "xdg-open" # system default browser - thanks: http://stackoverflow.com/questions/5116473/linux-command-to-open-url-in-default-browser
 DEVNULL = open(os.devnull, 'w')
@@ -13,6 +22,8 @@ for arg in sys.argv[1:]: # skip first argument in sys.argv because it's the name
 		browser = "google-chrome"
 	elif arg == "-f":
 		browser = "firefox"
+	elif arg == "--help":
+		printHelp()
 	else:
 		query += arg
 		query += '+'
