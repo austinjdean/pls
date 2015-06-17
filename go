@@ -11,4 +11,4 @@ for arg in sys.argv[1:]: # skip first argument in sys.argv because it's the name
 
 query = 'https://www.google.com/search?q=' + query
 
-subprocess.call(["google-chrome-stable", query]) # TODO: make this call the user's favorite browser instead of forcing Chrome
+subprocess.call(["xdg-open", query]) # xdg-open uses system default browser

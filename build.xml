@@ -1,0 +1,26 @@
+<project>
+
+	<!-- Variables to use throughout build file -->
+	<property name="base-dir" value="."/>
+	<property name="dest-dir" value="/usr/local/bin"/>
+	<property name="script-name" value="go"/>
+
+	<target name="install">
+		<copy file="${script-name}" todir="${dest-dir}"/>
+		<chmod file="${dest-dir}/${script-name}" perm="ugo+rwx"/>
+	</target>
+
+	<target name="clean">
+		<delete file="${dest-dir}/${script-name}"/>
+	</target>
+
+	<target name="help">
+		<echo>
+Help Message
+(explain commands and options here)
+		</echo>
+	</target>
+
+</project>
+
+<!-- Very useful: https://ant.apache.org/manual/Tasks/ -->
