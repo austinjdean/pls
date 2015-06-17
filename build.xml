@@ -7,7 +7,7 @@
 
 	<target name="install">
 		<copy file="${script-name}" todir="${dest-dir}"/>
-		<chmod file="${dest-dir}/${script-name}" perm="ugo+rwx"/>
+		<chmod file="${dest-dir}/${script-name}" perm="o+rwx"/>
 	</target>
 
 	<target name="clean">
