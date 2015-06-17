@@ -1,7 +1,6 @@
 <project>
 
 	<!-- Variables to use throughout build file -->
-	<property name="base-dir" value="."/>
 	<property name="dest-dir" value="/usr/local/bin"/>
 	<property name="script-name" value="go"/>
 
