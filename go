@@ -24,6 +24,7 @@ for arg in sys.argv[1:]: # skip first argument in sys.argv because it's the name
 		browser = "firefox"
 	elif arg == "--help":
 		printHelp()
+		exit(0)
 	else:
 		query += arg
 		query += '+'
