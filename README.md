@@ -13,15 +13,12 @@ Python utility to search Google from the Linux command line
 
 `sudo ant clean`
 
-##### Usage:
-
-go [options] [search terms]
+##### Usage:  
+`go [options] [search terms]`
 
 ##### Options:
-
-	-c: open using Chrome
-
-	-f: open using Firefox
+`-c: open using Chrome`  
+`-f: open using Firefox`
 
 ##### Notes:
 - search terms do not need to be enclosed in quotes.
