@@ -7,15 +7,15 @@ Python utility to search Google from the Linux command line
 
 Use ant:
 
-> sudo ant install
+`sudo ant install`
 
 Removal:
 
-> sudo ant clean
+`sudo ant clean`
 
 Usage: 
 
-> ant help
+`ant help`
 
 #### To-do list:
 - (?) switch window focus to newly created browser session
