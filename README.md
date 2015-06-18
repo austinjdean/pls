@@ -13,7 +13,7 @@ Python utility to search Google from the Linux command line
 
 `sudo ant clean`
 
-##### Usage:  
+##### Usage:
 `goo [options] [search terms]`
 
 ##### Options:
