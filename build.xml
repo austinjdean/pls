@@ -2,15 +2,18 @@
 
 	<!-- Variables to use throughout build file -->
 	<property name="dest-dir" value="/usr/local/bin"/>
-	<property name="script-name" value="goo"/>
+	<property name="executable" value="whatis"/>
+	<property name="script-name" value="goo.py"/>
+
+	<!-- Use a symbolic link instead of copying. That way there is no need
+	to update if the script is edited -->
 
 	<target name="install">
-		<copy file="${script-name}" todir="${dest-dir}"/>
-		<chmod file="${dest-dir}/${script-name}" perm="o+rwx"/>
+		<symlink link="${dest-dir}/${executable}" resource="${user.dir}/${script-name}"/>
 	</target>
 
 	<target name="clean">
-		<delete file="${dest-dir}/${script-name}"/>
+		<delete file="${dest-dir}/${executable}"/>
 	</target>
 
 </project>

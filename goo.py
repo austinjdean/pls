@@ -29,7 +29,7 @@ for arg in sys.argv[1:]: # skip first argument in sys.argv because it's the name
 		printHelp()
 		exit(0)
 	elif arg == '-l':
-		# feeling lucky - make url to open = the first google result
+		# TODO:feeling lucky - make url to open = the first google result
 		pass
 	else:
 		query += arg
