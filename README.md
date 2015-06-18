@@ -23,6 +23,7 @@ Python utility to search Google from the Linux command line
 
 ##### Notes:
 - search terms do not need to be enclosed in quotes.
+- if building with `ant` fails, try using `sudo`.
 
 #### To-do list:
 - (?) switch window focus to newly created browser session
