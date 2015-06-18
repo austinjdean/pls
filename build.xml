@@ -2,7 +2,7 @@
 
 	<!-- Variables to use throughout build file -->
 	<property name="dest-dir" value="/usr/local/bin"/>
-	<property name="script-name" value="go"/>
+	<property name="script-name" value="goo"/>
 
 	<target name="install">
 		<copy file="${script-name}" todir="${dest-dir}"/>

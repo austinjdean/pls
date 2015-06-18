@@ -1,9 +1,9 @@
-# go
+# goo
 Python utility to search Google from the Linux command line
 
 ### Installation:
 
-(Tentatively using ant - might go with Ryan's install scripts)
+(Tentatively using ant - might use Ryan's install scripts)
 
 ##### Use ant:
 
@@ -14,7 +14,7 @@ Python utility to search Google from the Linux command line
 `sudo ant clean`
 
 ##### Usage:  
-`go [options] [search terms]`
+`goo [options] [search terms]`
 
 ##### Options:
 `-c: open using Chrome`  
