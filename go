@@ -14,15 +14,15 @@ def printHelp():
 	print '\t- search terms do not need to be enclosed in quotes.'
 
 query = ''
-browser = "xdg-open" # system default browser - thanks: http://stackoverflow.com/questions/5116473/linux-command-to-open-url-in-default-browser
+browser = 'xdg-open' # system default browser - thanks: http://stackoverflow.com/questions/5116473/linux-command-to-open-url-in-default-browser
 DEVNULL = open(os.devnull, 'w')
 
 for arg in sys.argv[1:]: # skip first argument in sys.argv because it's the name of the script
-	if arg == "-c":
-		browser = "google-chrome"
-	elif arg == "-f":
-		browser = "firefox"
-	elif arg == "--help":
+	if arg == '-c':
+		browser = 'google-chrome'
+	elif arg == '-f':
+		browser = 'firefox'
+	elif arg == '--help' or arg == '-h':
 		printHelp()
 		exit(0)
 	else:
