@@ -6,7 +6,7 @@ import os
 
 def printHelp():
 	print 'Usage:\n'
-	print 'go [options] [search terms]\n'
+	print '\tgo [options] [search terms]\n'
 	print 'Options:\n'
 	print '\t-c: open using Chrome\n'
 	print '\t-f: open using Firefox\n'
