@@ -10,6 +10,7 @@ def printHelp():
 	print 'Options:\n'
 	print '\t-c: open using Chrome\n'
 	print '\t-f: open using Firefox\n'
+	print '\t-h: display usage information\n'
 	print 'Notes:'
 	print '\t- search terms do not need to be enclosed in quotes.'
 

@@ -19,6 +19,7 @@ Python utility to search Google from the Linux command line
 ##### Options:
 `-c: open using Chrome`  
 `-f: open using Firefox`
+`-h: display usage information`
 
 ##### Notes:
 - search terms do not need to be enclosed in quotes.
