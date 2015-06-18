@@ -3,6 +3,8 @@
 import sys
 import subprocess
 import os
+import re
+import urllib2
 
 def printHelp():
 	print 'Usage:\n'
@@ -26,11 +28,17 @@ for arg in sys.argv[1:]: # skip first argument in sys.argv because it's the name
 	elif arg == '--help' or arg == '-h':
 		printHelp()
 		exit(0)
+	elif arg == '-l':
+		# feeling lucky - make url to open = the first google result
+		pass
 	else:
 		query += arg
 		query += '+'
 
 query = 'https://www.google.com/search?q=' + query
+
+query = query[:-1] # remove final '+' added by for loop
+# thanks: http://stackoverflow.com/questions/15478127/remove-final-character-from-string-python
 
 subprocess.call([browser, query], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
 # thanks: http://stackoverflow.com/questions/11269575/how-to-hide-output-of-subprocess-in-python-2-7
