@@ -2,8 +2,8 @@
 
 	<!-- Variables to use throughout build file -->
 	<property name="dest-dir" value="/usr/local/bin"/>
-	<property name="executable" value="whatis"/>
-	<property name="script-name" value="goo.py"/>
+	<property name="executable" value="pls"/>
+	<property name="script-name" value="pls.py"/>
 
 	<!-- Use a symbolic link instead of copying. That way there is no need
 	to update if the script is edited -->

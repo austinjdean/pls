@@ -8,7 +8,7 @@ import urllib2
 
 def printHelp():
 	print 'Usage:\n'
-	print '\tgoo [options] [search terms]\n'
+	print '\tpls [options] [search terms]\n'
 	print 'Options:\n'
 	print '\t-c: open using Chrome\n'
 	print '\t-f: open using Firefox\n'
