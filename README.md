@@ -29,6 +29,10 @@ Python utility to search Google from the Linux command line
 - (?) switch window focus to newly created browser session
 
 #### Notes for collaborators:
+`git fetch`  
+`git checkout -b <your develop branch name>`  
+`git branch --set-upstream-to=origin/develop <your develop branch name>`  
+`git pull`  
 - read up on this branching model: http://nvie.com/posts/a-successful-git-branching-model/
 - most importantly, develop features on branches checked out from `develop`, and merge them back in when they're stable
 - once `develop` is stable, it gets merged with `master` as a new version
