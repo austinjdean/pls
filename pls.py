@@ -27,6 +27,10 @@ for arg in sys.argv[1:]: # skip first argument in sys.argv because it's the name
 		browser = 'google-chrome'
 	elif arg == '-f':
 		browser = 'firefox'
+	elif arg == '-i':
+		pass # images
+	elif arg == '-s':
+		pass # scholar
 	elif arg == '--help' or arg == '-h':
 		printHelp()
 		exit(0)
