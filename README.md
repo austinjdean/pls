@@ -3,8 +3,6 @@ Python utility to search Google from the Linux command line
 
 ### Installation:
 
-(Tentatively using ant - might use Ryan's install scripts)
-
 ##### Use ant:
 
 `sudo ant install`
