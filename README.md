@@ -19,6 +19,7 @@ Python utility to search Google from the Linux command line
 ##### Options:
 `-c: open using Chrome`  
 `-f: open using Firefox`  
+`-l: I'm Feeling Lucky`  
 `-h, --help: display usage information and exit`
 
 ##### Notes:
@@ -29,3 +30,9 @@ Python utility to search Google from the Linux command line
 #### To-do list:
 - (?) switch window focus to newly created browser session
 - (?) use Ryan's scripts instead of ant to install
+
+#### Notes for collaborators:
+- read up on this branching model: http://nvie.com/posts/a-successful-git-branching-model/
+- most importantly, develop features on branches checked out from `develop`, and merge them back in when they're stable
+- once `develop` is stable, it gets merged with `master` as a new version
+- the idea is that `master` will always represent a production-ready state
