@@ -49,5 +49,3 @@ if '-l' in sys.argv:
 
 subprocess.call([browser, url], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
 # thanks: http://stackoverflow.com/questions/11269575/how-to-hide-output-of-subprocess-in-python-2-7
-
-# comment to catalyze develop branch
