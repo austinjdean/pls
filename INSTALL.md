@@ -1,19 +1,12 @@
-How to install
-==============
+# How to install
 
+## Requirements
 
-Requirements
-============
+- apache ant
+- python 2.X
 
-apache ant
-python 2.X
+## Installation
 
-
-Installation
-============
-
-Clone this repository.
-Run:
-	ant install
-
-pls is now installed. 
+- Clone this repository.
+- Run: `ant install`
+- pls is now installed.
