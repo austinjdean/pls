@@ -49,7 +49,7 @@ def getQuery():
             printHelp()
             exit(0)
         elif arg == '-l':
-            pass # process this later
+            pass # lucky
         else: # arg is just a word, add it to the query string
             query += arg
             query += '+'
