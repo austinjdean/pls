@@ -34,8 +34,7 @@ Python utility to search Google from the Linux command line
 
 #### Notes for collaborators:
 `git fetch`  
-`git checkout -b <your develop branch name>`  
-`git branch --set-upstream-to=origin/develop <your develop branch name>`  
+`git checkout develop`  
 `git pull`  
 - read up on this branching model: http://nvie.com/posts/a-successful-git-branching-model/
 - most importantly, develop features on branches checked out from `develop`, and merge them back in when they're stable
