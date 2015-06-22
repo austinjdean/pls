@@ -19,6 +19,7 @@ def printHelp():
     print '\t-f: open using Firefox\n'
     print '\t-l: I\'m Feeling Lucky\n'
     print '\t-s: search using Google Scholar\n'
+    print '\t-i: search using Google Images\n'
     print '\t-d: debug flag - prints the URL that pls will open\n'
     print '\t-h: display usage information and exit\n'
     print 'Notes:'
