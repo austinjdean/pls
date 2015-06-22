@@ -62,11 +62,14 @@ def determineURL(option):
     '''
     global url_g
 
-    if option == '-l':
+    if option == '-l': # I'm Feeling Lucky
         req = urllib2.Request(url_g, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
         con = urllib2.urlopen(req).read() # get html source
         searchObj = re.search( r'<h3 class="r"><a href="(.*?)"', con) # get first occurrence of a result and capture its URL
         url_g = searchObj.group(1)
+
+    elif option == '-s':
+        url_g = 'https://scholar.google.com/scholar?q='
 
     # additional options here
 
@@ -86,6 +89,11 @@ def main():
 
     if '-l' in sys.argv:
         determineURL('-l') # no need to assign to variable; this function sets the global variable
+        # do not append query here; the purpose of -l is to access first link of results
+
+    if '-s' in sys.argv:
+        determineURL('-s')
+        url_g += query
 
     debugPrint(url_g)
 
