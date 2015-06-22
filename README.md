@@ -31,7 +31,6 @@ Python utility to search Google from the Linux command line
 #### To-do list:
 - Option TBD: flag to search Let Me Google That For You, for when you're feeling extra sassy (http://lmgtfy.com/)
 - (?) switch window focus to newly created browser session
-- Option TBD: flag to search Let Me Google That For You, for when you're feeling extra sassy (http://lmgtfy.com/)
 
 #### Notes for collaborators:
 `git fetch`  
