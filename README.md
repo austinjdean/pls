@@ -20,7 +20,7 @@ Python utility to search Google from the Linux command line
 `-l: I'm Feeling Lucky`  
 `-s: search using Google Scholar`  
 `-i: search using Google Images`  
-`-m: increase sass - search using Let Me Google That For You`  
+`-m, --sass: increase sass - search using Let Me Google That For You`  
 `-d: debug flag - prints the URL that pls will open`  
 `-h, --help: display usage information and exit`
 

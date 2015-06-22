@@ -20,9 +20,9 @@ def printHelp():
     print '\t-l: I\'m Feeling Lucky\n'
     print '\t-s: search using Google Scholar\n'
     print '\t-i: search using Google Images\n'
-    print '\t-m: increase sass - search using Let Me Google That For You\n'
+    print '\t-m, --sass: increase sass - search using Let Me Google That For You\n'
     print '\t-d: debug flag - prints the URL that pls will open\n'
-    print '\t-h: display usage information and exit\n'
+    print '\t-h, --help: display usage information and exit\n'
     print 'Notes:'
     print '\t- search terms do not need to be enclosed in quotes.'
     print '\t- any special characters (*, ", $, etc...) will be consumed by the shell before the script can even get its hands on them. To use these literal characters in a search query, escape them with \.'
@@ -46,9 +46,9 @@ def getQuery():
             pass # images
         elif arg == '-s':
             pass # scholar
-        elif arg == '-m':
+        elif arg == '-m' or arg == '--sass':
             pass # LMGTFY
-        elif arg == '--help' or arg == '-h':
+        elif arg == '-h' or arg == '--help':
             printHelp()
             exit(0)
         elif arg == '-l':
@@ -85,7 +85,7 @@ def determineURL(option):
         imgHash = imgHash.replace('&amp;', '&')
         url_g = baseURL + imgHash
 
-    elif option == '-m': # Let Me Google That For You
+    elif option == '-m' or option == '--sass': # Let Me Google That For You
         url_g = 'http://www.lmgtfy.com/?q='
 
     # additional options here
@@ -115,7 +115,7 @@ def main():
     if '-i' in sys.argv:
         determineURL('-i')
 
-    if '-m' in sys.argv:
+    if '-m' in sys.argv or '--sass' in sys.argv:
         determineURL('-m')
         url_g += query
 
