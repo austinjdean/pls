@@ -69,8 +69,17 @@ def determineURL(option):
         searchObj = re.search( r'<h3 class="r"><a href="(.*?)"', con) # get first occurrence of a result and capture its URL
         url_g = searchObj.group(1)
 
-    elif option == '-s':
+    elif option == '-s': # Scholar
         url_g = 'https://scholar.google.com/scholar?q='
+
+    elif option == '-i': # Images
+        baseURL = 'https://www.google.com'
+        req = urllib2.Request(url_g, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
+        con = urllib2.urlopen(req).read()
+        searchObj = re.search( r'<a class="q qs" href="([^"]*)">Images</a>', con)
+        imgHash = searchObj.group(1)
+        imgHash = imgHash.replace('&amp;', '&')
+        url_g = baseURL + imgHash
 
     # additional options here
 
@@ -95,6 +104,9 @@ def main():
     if '-s' in sys.argv:
         determineURL('-s')
         url_g += query
+
+    if '-i' in sys.argv:
+        determineURL('-i')
 
     debugPrint(url_g)
 
