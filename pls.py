@@ -20,6 +20,7 @@ def printHelp():
     print '\t-l: I\'m Feeling Lucky\n'
     print '\t-s: search using Google Scholar\n'
     print '\t-i: search using Google Images\n'
+    print '\t-m: increase sass - search using Let Me Google That For You\n'
     print '\t-d: debug flag - prints the URL that pls will open\n'
     print '\t-h: display usage information and exit\n'
     print 'Notes:'
@@ -45,6 +46,8 @@ def getQuery():
             pass # images
         elif arg == '-s':
             pass # scholar
+        elif arg == '-m':
+            pass # LMGTFY
         elif arg == '--help' or arg == '-h':
             printHelp()
             exit(0)
@@ -82,6 +85,9 @@ def determineURL(option):
         imgHash = imgHash.replace('&amp;', '&')
         url_g = baseURL + imgHash
 
+    elif option == '-m': # Let Me Google That For You
+        url_g = 'http://www.lmgtfy.com/?q='
+
     # additional options here
 
 def debugPrint(string):
@@ -108,6 +114,10 @@ def main():
 
     if '-i' in sys.argv:
         determineURL('-i')
+
+    if '-m' in sys.argv:
+        determineURL('-m')
+        url_g += query
 
     debugPrint(url_g)
 
