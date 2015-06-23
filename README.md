@@ -30,7 +30,7 @@ Python utility to search Google from the Linux command line
 - Any special characters (`*`, `"`, `$`, etc...) will be consumed by the shell before the script can even get its hands on them. To use these literal characters in a search query, escape them with `\`.
 
 #### To-do list:
-- Woo! List is empty.
+- see the [Issues Page](https://github.com/austinjdean/pls/issues)
 
 #### Notes for collaborators:
 `git fetch`  
