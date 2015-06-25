@@ -85,8 +85,6 @@ def validateArgs():
     browserTrueCount = trueCount(browserArgs)
     flagTrueCount = trueCount(flagArgs)
 
-    # print args
-
     if flagTrueCount > 1:
         # give error message that only one flag of the set [s,l,i,m] can be used at once
         print 'Only one flag from the option set [-s,-l,-i,-m] may be used at once.'
