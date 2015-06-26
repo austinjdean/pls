@@ -5,123 +5,159 @@ import subprocess
 import os
 import re
 import urllib2
+import argparse
 
 # Global variables - _g suffix indicates global status
 
 url_g = 'https://www.google.com/search?q=' # default to standard google search
-dbf_g = False # debug flag - boolean variable to handle debug options
+browser_g = 'xdg-open' # use system default as default browser
+parser_g = argparse.ArgumentParser(epilog='Special characters (*, ", $, etc.) must be escaped using \, and search terms do not need to be enclosed in quotes.') # global argument parser
 
-def printHelp():
-    print 'Usage:\n'
-    print '\tpls [options] [search terms]\n'
-    print 'Options:\n'
-    print '\t-c: open using Chrome\n'
-    print '\t-f: open using Firefox\n'
-    print '\t-l: I\'m Feeling Lucky\n'
-    print '\t-s: search using Google Scholar\n'
-    print '\t-i: search using Google Images\n'
-    print '\t-m, --sass: increase sass - search using Let Me Google That For You\n'
-    print '\t-d: debug flag - prints the URL that pls will open\n'
-    print '\t-h, --help: display usage information and exit\n'
-    print 'Notes:'
-    print '\t- search terms do not need to be enclosed in quotes.'
-    print '\t- any special characters (*, ", $, etc...) will be consumed by the shell before the script can even get its hands on them. To use these literal characters in a search query, escape them with \.'
+# utility functions
+def trueCount(boolList):
+    count = 0 # number of true items in the list
+    for current in boolList:
+        if current == True:
+            count += 1
+    return count
+
+def debugPrint(string):
+    if parser_g.parse_args().debug == True: # check arguments for -d flag
+        print string
+
+# register arguments with the parser
+def initParser():
+    '''
+    Initializes the parser to accept all defined arguments. Future options should be registered here.
+    '''
+    browserArgGroup = parser_g.add_mutually_exclusive_group()
+    flagArgGroup = parser_g.add_mutually_exclusive_group()
+
+    parser_g.add_argument(
+            'terms',
+            help='Search terms to be passed to Google',
+            nargs='*')
+    parser_g.add_argument(
+            '-d',
+            '--debug',
+            help='Debug flag - prints the URL that pls will open',
+            action='store_true')
+    browserArgGroup.add_argument(
+            '-c',
+            '--chrome',
+            help='Open using Chrome',
+            action='store_true')
+    browserArgGroup.add_argument(
+            '-f',
+            '--firefox',
+            help='Open using Firefox',
+            action='store_true')
+    flagArgGroup.add_argument(
+            '-s',
+            '--scholar',
+            help='Search using Google Scholar',
+            action='store_true')
+    flagArgGroup.add_argument(
+            '-l',
+            '--lucky',
+            help='I\'m Feeling Lucky',
+            action='store_true')
+    flagArgGroup.add_argument(
+            '-i',
+            '--images',
+            help='Search using Google Images',
+            action='store_true')
+    flagArgGroup.add_argument(
+            '-m',
+            '--sass',
+            help='Increase sass - search using Let Me Google That For You',
+            action='store_true')
+
+def determineBrowser(argList):
+    '''
+    Sets global browser variable; the default value (xdg-open) is initialized with the global variable, so it is not specified here.
+    '''
+    global browser_g
+    if argList.chrome == True:
+        browser_g = 'google-chrome'
+
+    elif argList.firefox == True:
+        browser_g = 'firefox'
 
 def getQuery():
     '''
     Gets the query string that will be appended to the appropriate URL. 
     '''
-    query = '' #The query to be returned
-
-    #Build the query 
-    for arg in sys.argv[1:]: # skip first argument in sys.argv because it's the name of the script
-        if arg == '-c':
-            browser = 'google-chrome'
-        elif arg == '-f':
-            browser = 'firefox'
-        elif arg == '-d':
-            global dbf_g
-            dbf_g = True
-        elif arg == '-i':
-            pass # images
-        elif arg == '-s':
-            pass # scholar
-        elif arg == '-m' or arg == '--sass':
-            pass # LMGTFY
-        elif arg == '-h' or arg == '--help':
-            printHelp()
-            exit(0)
-        elif arg == '-l':
-            pass # lucky
-        else: # arg is just a word, add it to the query string
-            query += arg
-            query += '+'
-
-    # thanks: http://stackoverflow.com/questions/15478127/remove-final-character-from-string-python
+    query = ''
+    terms = parser_g.parse_args().terms # don't need to declare global parser_g because we're not editing the variable here - just reading from it
+    for term in terms:
+        query += term
+        query += '+'
     query = query[:-1] # remove final '+' added by for loop
     return query
 
-def determineURL(option):
+def determineURL(argList):
     '''
-    Sets global URL (e.g. to search Images, Scholar, LMGTFY, etc.) given the correcponsing flag.
+    Sets global URL (e.g. to search Images, Scholar, LMGTFY, etc.) given the corresponding flag.
     '''
     global url_g
+    query = getQuery() # query to be appended to URL in some cases
 
-    if option == '-l': # I'm Feeling Lucky
+    url_g += query # default to standard Google search
+
+    if argList.scholar == True: # Scholar
+        url_g = 'https://scholar.google.com/scholar?q='
+        url_g += query
+        # append query here to show Google results page with given query
+
+    elif argList.lucky == True: # I'm Feeling Lucky
         req = urllib2.Request(url_g, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
         con = urllib2.urlopen(req).read() # get html source
         searchObj = re.search( r'<h3 class="r"><a href="(.*?)"', con) # get first occurrence of a result and capture its URL
-        url_g = searchObj.group(1)
 
-    elif option == '-s': # Scholar
-        url_g = 'https://scholar.google.com/scholar?q='
+        if not searchObj:
+            print 'Warning: no search terms detected. Defaulting to Google homepage.'
+            url_g = 'https://www.google.com/'
 
-    elif option == '-i': # Images
+        else:
+            url_g = searchObj.group(1)
+        # do not append query here; the purpose of -l is to access first link of results
+
+    elif argList.images == True: # Images
         baseURL = 'https://www.google.com'
         req = urllib2.Request(url_g, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
         con = urllib2.urlopen(req).read()
         searchObj = re.search( r'<a class="q qs" href="([^"]*)">Images</a>', con)
-        imgHash = searchObj.group(1)
-        imgHash = imgHash.replace('&amp;', '&')
-        url_g = baseURL + imgHash
 
-    elif option == '-m' or option == '--sass': # Let Me Google That For You
+        if not searchObj:
+            print 'Warning: no search terms detected. Defaulting to Google Images homepage.'
+            url_g = 'https://images.google.com/'
+
+        else:
+            imgHash = searchObj.group(1)
+            imgHash = imgHash.replace('&amp;', '&')
+            url_g = baseURL + imgHash
+        # do not append query here; Google Images has a more complex URL, which is handled by the above logic
+
+    elif argList.sass == True: # Let Me Google That For You
         url_g = 'http://www.lmgtfy.com/?q='
+        url_g += query
+        # append query here to pass search terms to LMGTFY
 
     # additional options here
 
-def debugPrint(string):
-    if dbf_g == 1:
-        print string    
-
 def main():
-    query = ''
-    browser = 'xdg-open' # system default browser - thanks: http://stackoverflow.com/questions/5116473/linux-command-to-open-URL-in-default-browser
+    '''
+    Driver function for pls
+    '''
     DEVNULL = open(os.devnull, 'w')
 
-    query = getQuery()
-    
-    global url_g
-    url_g += query # default to standard Google search
-
-    if '-l' in sys.argv:
-        determineURL('-l') # no need to assign to variable; this function sets the global variable
-        # do not append query here; the purpose of -l is to access first link of results
-
-    if '-s' in sys.argv:
-        determineURL('-s')
-        url_g += query
-
-    if '-i' in sys.argv:
-        determineURL('-i')
-
-    if '-m' in sys.argv or '--sass' in sys.argv:
-        determineURL('-m')
-        url_g += query
-
+    initParser()
+    determineBrowser(parser_g.parse_args())
+    determineURL(parser_g.parse_args())
     debugPrint(url_g)
 
-    subprocess.call([browser, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
+    subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
     # thanks: http://stackoverflow.com/questions/11269575/how-to-hide-output-of-subprocess-in-python-2-7
 
 if __name__ == '__main__':
