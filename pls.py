@@ -155,7 +155,6 @@ def main():
     DEVNULL = open(os.devnull, 'w')
 
     initParser()
-    validateArgs()
     determineBrowser(parser_g.parse_args())
     determineURL(parser_g.parse_args())
 
