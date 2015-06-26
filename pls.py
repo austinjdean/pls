@@ -10,8 +10,8 @@ import argparse
 # Global variables - _g suffix indicates global status
 
 url_g = 'https://www.google.com/search?q=' # default to standard google search
-parser_g = argparse.ArgumentParser() # global argument parser
 browser_g = 'xdg-open' # use system default as default browser
+parser_g = argparse.ArgumentParser(epilog='Special characters (*, ", $, etc.) must be escaped using \, and search terms do not need to be enclosed in quotes.') # global argument parser
 
 # utility functions
 def trueCount(boolList):

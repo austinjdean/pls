@@ -27,7 +27,7 @@ Python utility to search Google from the Linux command line
 ##### Notes:
 - search terms do not need to be enclosed in quotes.
 - if building with `ant` fails, try using `sudo`.
-- Any special characters (`*`, `"`, `$`, etc...) will be consumed by the shell before the script can even get its hands on them. To use these literal characters in a search query, escape them with `\`.
+- Any special characters (`*`, `"`, `$`, etc.) will be consumed by the shell before the script can even get its hands on them. To use these literal characters in a search query, escape them with `\`.
 
 #### To-do list:
 - see the [Issues Page](https://github.com/austinjdean/pls/issues)
