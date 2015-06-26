@@ -22,7 +22,7 @@ def trueCount(boolList):
     return count
 
 def debugPrint(string):
-    if parser_g.parse_args().d == True: # check arguments for -d flag
+    if parser_g.parse_args().debug == True: # check arguments for -d flag
         print string
 
 # register arguments with the parser
@@ -32,34 +32,42 @@ def initParser():
     '''
     parser_g.add_argument(
             'terms',
+            help='Search terms to be passed to Google',
             nargs='*')
     parser_g.add_argument(
             '-c',
-            help='open using Chrome',
+            '--chrome',
+            help='Open using Chrome',
             action='store_true')
     parser_g.add_argument(
             '-f',
-            help='open using Firefox',
+            '--firefox',
+            help='Open using Firefox',
             action='store_true')
     parser_g.add_argument(
             '-s',
-            help='search using Google Scholar',
+            '--scholar',
+            help='Search using Google Scholar',
             action='store_true')
     parser_g.add_argument(
             '-l',
+            '--lucky',
             help='I\'m Feeling Lucky',
             action='store_true')
     parser_g.add_argument(
             '-i',
-            help='search using Google Images',
+            '--images',
+            help='Search using Google Images',
             action='store_true')
     parser_g.add_argument(
             '-m',
-            help='increase sass - search using Let Me Google That For You',
+            '--sass',
+            help='Increase sass - search using Let Me Google That For You',
             action='store_true')
     parser_g.add_argument(
             '-d',
-            help='debug flag - prints the URL that pls will open',
+            '--debug',
+            help='Debug flag - prints the URL that pls will open',
             action='store_true')
 
 def validateArgs():
@@ -73,14 +81,14 @@ def validateArgs():
     # [c,f] [s,l,i,m]
     # If one argument in a given set is chosen, no others from that set may be chosen.
     browserArgs = []
-    browserArgs.append(args.c)
-    browserArgs.append(args.f)
+    browserArgs.append(args.chrome)
+    browserArgs.append(args.firefox)
 
     flagArgs = []
-    flagArgs.append(args.s)
-    flagArgs.append(args.l)
-    flagArgs.append(args.i)
-    flagArgs.append(args.m)
+    flagArgs.append(args.scholar)
+    flagArgs.append(args.lucky)
+    flagArgs.append(args.images)
+    flagArgs.append(args.sass)
 
     browserTrueCount = trueCount(browserArgs)
     flagTrueCount = trueCount(flagArgs)
@@ -100,10 +108,10 @@ def determineBrowser(argList):
     Sets global browser variable; the default value (xdg-open) is initialized with the global variable, so it is not specified here.
     '''
     global browser_g
-    if argList.c == True:
+    if argList.chrome == True:
         browser_g = 'google-chrome'
 
-    elif argList.f == True:
+    elif argList.firefox == True:
         browser_g = 'firefox'
 
 def getQuery():
@@ -128,12 +136,12 @@ def determineURL(argList):
 
     url_g += query # default to standard Google search
 
-    if argList.s == True: # Scholar
+    if argList.scholar == True: # Scholar
         url_g = 'https://scholar.google.com/scholar?q='
         url_g += query
         # append query here to show Google results page with given query
 
-    elif argList.l == True: # I'm Feeling Lucky
+    elif argList.lucky == True: # I'm Feeling Lucky
         req = urllib2.Request(url_g, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
         con = urllib2.urlopen(req).read() # get html source
         searchObj = re.search( r'<h3 class="r"><a href="(.*?)"', con) # get first occurrence of a result and capture its URL
@@ -146,7 +154,7 @@ def determineURL(argList):
             url_g = searchObj.group(1)
         # do not append query here; the purpose of -l is to access first link of results
 
-    elif argList.i == True: # Images
+    elif argList.images == True: # Images
         baseURL = 'https://www.google.com'
         req = urllib2.Request(url_g, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
         con = urllib2.urlopen(req).read()
@@ -162,7 +170,7 @@ def determineURL(argList):
             url_g = baseURL + imgHash
         # do not append query here; Google Images has a more complex URL, which is handled by the above logic
 
-    elif argList.m == True: # Let Me Google That For You
+    elif argList.sass == True: # Let Me Google That For You
         url_g = 'http://www.lmgtfy.com/?q='
         url_g += query
         # append query here to pass search terms to LMGTFY
