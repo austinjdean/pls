@@ -74,39 +74,6 @@ def initParser():
             help='Increase sass - search using Let Me Google That For You',
             action='store_true')
 
-def validateArgs():
-    '''
-    Ensures there are no conflicts with the given arguments, and provides warning and error messages, and exits when need be.
-    '''
-    args = parser_g.parse_args()
-
-    # Group conflicting options
-    # conflicting groups:
-    # [c,f] [s,l,i,m]
-    # If one argument in a given set is chosen, no others from that set may be chosen.
-    browserArgs = []
-    browserArgs.append(args.chrome)
-    browserArgs.append(args.firefox)
-
-    flagArgs = []
-    flagArgs.append(args.scholar)
-    flagArgs.append(args.lucky)
-    flagArgs.append(args.images)
-    flagArgs.append(args.sass)
-
-    browserTrueCount = trueCount(browserArgs)
-    flagTrueCount = trueCount(flagArgs)
-
-    if flagTrueCount > 1:
-        # give error message that only one flag of the set [s,l,i,m] can be used at once
-        print 'Only one flag from the option set [-s,-l,-i,-m] may be used at once.'
-        exit(2)
-
-    if browserTrueCount > 1:
-        # give warning message that only one browser can be specified and use system default
-        print 'Warning: multiple browsers specified. Using system default browser...'
-        browser_g = 'xdg-open'
-
 def determineBrowser(argList):
     '''
     Sets global browser variable; the default value (xdg-open) is initialized with the global variable, so it is not specified here.
