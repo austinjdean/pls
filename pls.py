@@ -30,44 +30,48 @@ def initParser():
     '''
     Initializes the parser to accept all defined arguments. Future options should be registered here.
     '''
+
+    browserArgGroup = parser_g.add_mutually_exclusive_group()
+    flagArgGroup = parser_g.add_mutually_exclusive_group()
+
     parser_g.add_argument(
             'terms',
             help='Search terms to be passed to Google',
             nargs='*')
     parser_g.add_argument(
+            '-d',
+            '--debug',
+            help='Debug flag - prints the URL that pls will open',
+            action='store_true')
+    browserArgGroup.add_argument(
             '-c',
             '--chrome',
             help='Open using Chrome',
             action='store_true')
-    parser_g.add_argument(
+    browserArgGroup.add_argument(
             '-f',
             '--firefox',
             help='Open using Firefox',
             action='store_true')
-    parser_g.add_argument(
+    flagArgGroup.add_argument(
             '-s',
             '--scholar',
             help='Search using Google Scholar',
             action='store_true')
-    parser_g.add_argument(
+    flagArgGroup.add_argument(
             '-l',
             '--lucky',
             help='I\'m Feeling Lucky',
             action='store_true')
-    parser_g.add_argument(
+    flagArgGroup.add_argument(
             '-i',
             '--images',
             help='Search using Google Images',
             action='store_true')
-    parser_g.add_argument(
+    flagArgGroup.add_argument(
             '-m',
             '--sass',
             help='Increase sass - search using Let Me Google That For You',
-            action='store_true')
-    parser_g.add_argument(
-            '-d',
-            '--debug',
-            help='Debug flag - prints the URL that pls will open',
             action='store_true')
 
 def validateArgs():
@@ -96,7 +100,7 @@ def validateArgs():
     if flagTrueCount > 1:
         # give error message that only one flag of the set [s,l,i,m] can be used at once
         print 'Only one flag from the option set [-s,-l,-i,-m] may be used at once.'
-        exit(1)
+        exit(2)
 
     if browserTrueCount > 1:
         # give warning message that only one browser can be specified and use system default
