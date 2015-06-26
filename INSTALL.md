@@ -8,5 +8,5 @@
 ## Installation
 
 - Clone this repository.
-- Run: `ant install`
+- Run: `sudo ant install`
 - pls is now installed.
