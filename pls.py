@@ -30,7 +30,6 @@ def initParser():
     '''
     Initializes the parser to accept all defined arguments. Future options should be registered here.
     '''
-
     browserArgGroup = parser_g.add_mutually_exclusive_group()
     flagArgGroup = parser_g.add_mutually_exclusive_group()
 
@@ -89,9 +88,8 @@ def getQuery():
     '''
     Gets the query string that will be appended to the appropriate URL. 
     '''
-    global parser_g
     query = ''
-    terms = parser_g.parse_args().terms
+    terms = parser_g.parse_args().terms # don't need to declare global parser_g because we're not editing the variable here - just reading from it
     for term in terms:
         query += term
         query += '+'
@@ -157,7 +155,6 @@ def main():
     initParser()
     determineBrowser(parser_g.parse_args())
     determineURL(parser_g.parse_args())
-
     debugPrint(url_g)
 
     subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
