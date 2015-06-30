@@ -6,6 +6,7 @@ import os
 import re
 import urllib2
 import argparse
+import random
 
 # Global variables - _g suffix indicates global status
 
@@ -40,7 +41,7 @@ def initParser():
     parser_g.add_argument(
             '-d',
             '--debug',
-            help='Debug flag - prints the URL that pls will open',
+            help='Debug flag - print the URL that pls will open',
             action='store_true')
     browserArgGroup.add_argument(
             '-c',
@@ -71,6 +72,11 @@ def initParser():
             '-m',
             '--sass',
             help='Increase sass - search using Let Me Google That For You',
+            action='store_true')
+    flagArgGroup.add_argument(
+            '-r',
+            '--simpsons',
+            help='Instead of performing a Google search, open a randomly selected Simpsons episode',
             action='store_true')
 
 def determineBrowser(argList):
@@ -143,6 +149,21 @@ def determineURL(argList):
         url_g = 'http://www.lmgtfy.com/?q='
         url_g += query
         # append query here to pass search terms to LMGTFY
+
+    elif argList.simpsons == True:
+        seasonSelect = 'http://projectfreetv.so/free/the-simpsons/'
+        req = urllib2.Request(seasonSelect, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
+        con = urllib2.urlopen(req).read()
+        searchObj = re.findall( r'<a href="(http://projectfreetv.so/free/the-simpsons/the-simpsons-season-\d+/)" ?>', con)
+        seasonURL = random.choice(searchObj)
+
+        episodeSelect = seasonURL
+        req = urllib2.Request(episodeSelect, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
+        con = urllib2.urlopen(req).read()
+        searchObj = re.findall( r'<a href="(http://projectfreetv.so/the-simpsons-season-\d+-episode-\d+/)">', con)
+        episodeURL = random.choice(searchObj)
+
+        url_g = episodeURL
 
     # additional options here
 
