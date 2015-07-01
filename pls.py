@@ -102,11 +102,31 @@ def getQuery():
     query = query[:-1] # remove final '+' added by for loop
     return query
 
+def internetOn():
+    try:
+        response = urllib2.urlopen('http://google.com/', timeout = 1)
+        return True
+    except urllib2.URLError as err: pass
+    return False
+
+def exitIfNoInternet():
+    if not internetOn():
+        print 'Problem connecting to the internet.'
+        exit(64) # exit code 64 means machine is not on the network
+
+def getSource(url):
+    req = urllib2.Request(url, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
+    source = urllib2.urlopen(req).read() # get html source
+    return source
+
 def determineURL(argList):
     '''
     Sets global URL (e.g. to search Images, Scholar, LMGTFY, etc.) given the corresponding flag.
     '''
     global url_g
+
+    exitIfNoInternet()
+
     query = getQuery() # query to be appended to URL in some cases
 
     url_g += query # default to standard Google search
@@ -117,9 +137,8 @@ def determineURL(argList):
         # append query here to show Google results page with given query
 
     elif argList.lucky == True: # I'm Feeling Lucky
-        req = urllib2.Request(url_g, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
-        con = urllib2.urlopen(req).read() # get html source
-        searchObj = re.search( r'<h3 class="r"><a href="(.*?)"', con) # get first occurrence of a result and capture its URL
+        source = getSource(url_g)
+        searchObj = re.search( r'<h3 class="r"><a href="(.*?)"', source) # get first occurrence of a result and capture its URL
 
         if not searchObj:
             print 'Warning: no search terms detected. Defaulting to Google homepage.'
@@ -131,9 +150,8 @@ def determineURL(argList):
 
     elif argList.images == True: # Images
         baseURL = 'https://www.google.com'
-        req = urllib2.Request(url_g, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
-        con = urllib2.urlopen(req).read()
-        searchObj = re.search( r'<a class="q qs" href="([^"]*)">Images</a>', con)
+        source = getSource(url_g)
+        searchObj = re.search( r'<a class="q qs" href="([^"]*)">Images</a>', source)
 
         if not searchObj:
             print 'Warning: no search terms detected. Defaulting to Google Images homepage.'
@@ -152,15 +170,13 @@ def determineURL(argList):
 
     elif argList.simpsons == True:
         seasonSelect = 'http://projectfreetv.so/free/the-simpsons/'
-        req = urllib2.Request(seasonSelect, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
-        con = urllib2.urlopen(req).read()
-        searchObj = re.findall( r'<a href="(http://projectfreetv.so/free/the-simpsons/the-simpsons-season-\d+/)" ?>', con)
+        source = getSource(seasonSelect)
+        searchObj = re.findall( r'<a href="(http://projectfreetv.so/free/the-simpsons/the-simpsons-season-\d+/)" ?>', source)
         seasonURL = random.choice(searchObj)
 
         episodeSelect = seasonURL
-        req = urllib2.Request(episodeSelect, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
-        con = urllib2.urlopen(req).read()
-        searchObj = re.findall( r'<a href="(http://projectfreetv.so/the-simpsons-season-\d+-episode-\d+/)">', con)
+        source = getSource(episodeSelect)
+        searchObj = re.findall( r'<a href="(http://projectfreetv.so/the-simpsons-season-\d+-episode-\d+/)">', source)
         episodeURL = random.choice(searchObj)
 
         url_g = episodeURL
