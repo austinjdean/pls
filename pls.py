@@ -102,7 +102,7 @@ def getQuery():
     query = query[:-1] # remove final '+' added by for loop
     return query
 
-def internetOn():
+def internetOn(): # thanks: http://stackoverflow.com/questions/3764291/checking-network-connection
     try:
         response = urllib2.urlopen('http://google.com/', timeout = 1)
         return True
