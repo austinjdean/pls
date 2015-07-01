@@ -24,8 +24,8 @@ Python utility to search Google from the Linux command line
 -l, --lucky     I'm Feeling Lucky
 -i, --images    Search using Google Images
 -m, --sass      Increase sass - search using Let Me Google That For You
--r, --simpsons  Instead of performing a Google search, open a randomly
-                selected Simpsons episode
+-r, --simpsons  Open a randomly selected Simpsons episode
+-x, --xkcd      Open a randomly selected xkcd comic
 ```
 
 ##### Notes:
