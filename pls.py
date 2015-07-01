@@ -76,7 +76,12 @@ def initParser():
     flagArgGroup.add_argument(
             '-r',
             '--simpsons',
-            help='Instead of performing a Google search, open a randomly selected Simpsons episode',
+            help='Open a randomly selected Simpsons episode',
+            action='store_true')
+    flagArgGroup.add_argument(
+            '-x',
+            '--xkcd',
+            help='Open a randomly selected xkcd comic',
             action='store_true')
 
 def determineBrowser(argList):
@@ -180,6 +185,10 @@ def determineURL(argList):
         episodeURL = random.choice(searchObj)
 
         url_g = episodeURL
+
+    elif argList.xkcd == True:
+        # url_g = 'https://xkcd.com/4/' # guaranteed to be random
+        url_g = 'http://c.xkcd.com/random/comic/'
 
     # additional options here
 
