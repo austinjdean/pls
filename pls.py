@@ -7,18 +7,6 @@ url_g = 'https://www.google.com/search?q=' # default to standard google search
 browser_g = 'xdg-open' # use system default as default browser
 parser_g = argparse.ArgumentParser(epilog='Special characters (*, ", $, etc.) must be escaped using \, and search terms do not need to be enclosed in quotes.') # global argument parser
 
-# utility functions
-def trueCount(boolList):
-    count = 0 # number of true items in the list
-    for current in boolList:
-        if current == True:
-            count += 1
-    return count
-
-def debugPrint(string):
-    if parser_g.parse_args().debug == True: # check arguments for -d flag
-        print string
-
 # register arguments with the parser
 def initParser():
     '''
@@ -233,6 +221,10 @@ def determineURL(argList):
         url_g = 'https://www.google.com/#tbm=vid&q=' + query
 
     # additional options here
+
+def debugPrint(string):
+    if parser_g.parse_args().debug == True: # check arguments for -d flag
+        print string
 
 def main():
     '''
