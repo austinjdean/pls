@@ -18,13 +18,13 @@ Python utility to search Google from the Linux command line
 ```
 -h, --help      show this help message and exit
 -d, --debug     Debug flag - print the URL that pls will open
+-l, --lucky     I'm Feeling Lucky
 -c, --chrome    Open using Chrome
 -f, --firefox   Open using Firefox
--s, --scholar   Search using Google Scholar
--l, --lucky     I'm Feeling Lucky
 -i, --images    Search using Google Images
--m, --sass      Increase sass - search using Let Me Google That For You
+-s, --scholar   Search using Google Scholar
 -y, --youtube   Search using YouTube
+-m, --sass      Increase sass - search using Let Me Google That For You
 -r, --simpsons  Open a randomly selected Simpsons episode
 -x, --xkcd      Open a randomly selected xkcd comic
 ```
