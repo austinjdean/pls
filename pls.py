@@ -67,6 +67,11 @@ def initParser():
             help='Increase sass - search using Let Me Google That For You',
             action='store_true')
     flagArgGroup.add_argument(
+            '-y',
+            '--youtube',
+            help='Search using YouTube',
+            action='store_true')
+    flagArgGroup.add_argument(
             '-r',
             '--simpsons',
             help='Open a randomly selected Simpsons episode',
@@ -129,12 +134,11 @@ def determineURL(argList):
 
     url_g += query # default to standard Google search
 
-    if argList.scholar == True: # Scholar
-        url_g = 'https://scholar.google.com/scholar?q='
-        url_g += query
+    if argList.scholar == True:
+        url_g = 'https://scholar.google.com/scholar?q=' + query
         # append query here to show Google results page with given query
 
-    elif argList.lucky == True: # I'm Feeling Lucky
+    elif argList.lucky == True:
         source = getSource(url_g)
         searchObj = re.search( r'<h3 class="r"><a href="(.*?)"', source) # get first occurrence of a result and capture its URL
 
@@ -146,7 +150,7 @@ def determineURL(argList):
             url_g = searchObj.group(1)
         # do not append query here; the purpose of -l is to access first link of results
 
-    elif argList.images == True: # Images
+    elif argList.images == True:
         baseURL = 'https://www.google.com'
         source = getSource(url_g)
         searchObj = re.search( r'<a class="q qs" href="([^"]*)">Images</a>', source)
@@ -161,9 +165,8 @@ def determineURL(argList):
             url_g = baseURL + imgHash
         # do not append query here; Google Images has a more complex URL, which is handled by the above logic
 
-    elif argList.sass == True: # Let Me Google That For You
-        url_g = 'http://www.lmgtfy.com/?q='
-        url_g += query
+    elif argList.sass == True:
+        url_g = 'http://www.lmgtfy.com/?q=' + query
         # append query here to pass search terms to LMGTFY
 
     elif argList.simpsons == True:
@@ -182,6 +185,10 @@ def determineURL(argList):
     elif argList.xkcd == True:
         # url_g = 'https://xkcd.com/4/' # guaranteed to be random
         url_g = 'http://c.xkcd.com/random/comic/'
+
+    elif argList.youtube == True:
+        url_g = 'https://www.youtube.com/results?search_query=' + query
+        # append query here to display youtube results with given query
 
     # additional options here
 
