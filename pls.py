@@ -62,6 +62,16 @@ def initParser():
             help='Search using Google Scholar',
             action='store_true')
     flagArgGroup.add_argument(
+            '-n',
+            '--news',
+            help='Search using Google News',
+            action='store_true')
+    flagArgGroup.add_argument(
+            '-v',
+            '--video',
+            help='Search using Google Video',
+            action='store_true')
+    flagArgGroup.add_argument(
             '-y',
             '--youtube',
             help='Search using YouTube',
@@ -203,6 +213,13 @@ def determineURL(argList):
         url_g = 'https://www.youtube.com/results?search_query=' + query
         # append query here to display youtube results with given query
 
+    elif argList.news == True:
+        url_g = 'https://www.google.com/search?tbm=nws&q=' + query
+        # append query here to display news results with given query
+
+    elif argList.video == True:
+        url_g = 'https://www.google.com/#tbm=vid&q=' + query
+
     # additional options here
 
 def handleLucky(argList):
@@ -217,8 +234,7 @@ def handleLucky(argList):
             searchObj = re.search( r'<h3 class="yt-lockup-title"><a href="(/watch\?v=.*?)"', source) # get first occurrence of a YouTube result and capture its URL
 
             if not searchObj:
-                print 'Search object found no matches.'
-                url_g = 'https://www.youtube.com/'
+                print 'Warning: no luck in getting first result.'
 
             else:
                 url_g = 'https://www.youtube.com' + searchObj.group(1) # only video hash is captured, so it must be appended on the base YouTube URL
@@ -237,7 +253,6 @@ def handleLucky(argList):
 
             if not searchObj:
                 print 'Warning: no luck in getting first result.'
-                # url_g = 'https://www.google.com/'
 
             else:
                 url_g = searchObj.group(1)

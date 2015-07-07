@@ -23,6 +23,7 @@ Python utility to search Google from the Linux command line
 -f, --firefox   Open using Firefox
 -i, --images    Search using Google Images
 -s, --scholar   Search using Google Scholar
+-n, --news      Search using Google News
 -y, --youtube   Search using YouTube
 -m, --sass      Increase sass - search using Let Me Google That For You
 -r, --simpsons  Open a randomly selected Simpsons episode
