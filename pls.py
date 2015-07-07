@@ -36,11 +36,6 @@ def initParser():
             '--debug',
             help='Debug flag - print the URL that pls will open',
             action='store_true')
-    parser_g.add_argument(
-            '-l',
-            '--lucky',
-            help='I\'m Feeling Lucky',
-            action='store_true')
     browserArgGroup.add_argument(
             '-c',
             '--chrome',
@@ -50,6 +45,11 @@ def initParser():
             '-f',
             '--firefox',
             help='Open using Firefox',
+            action='store_true')
+    flagArgGroup.add_argument(
+            '-l',
+            '--lucky',
+            help='I\'m Feeling Lucky',
             action='store_true')
     flagArgGroup.add_argument(
             '-i',
@@ -173,6 +173,18 @@ def determineURL(argList):
         url_g = 'https://scholar.google.com/scholar?q=' + query
         # append query here to show Google results page with given query
 
+    elif argList.lucky == True:
+        source = getSource(url_g)
+        searchObj = re.search( r'<h3 class="r"><a href="(.*?)"', source) # get first occurrence of a result and capture its URL
+
+        if not searchObj:
+            print 'Warning: no search terms detected. Defaulting to Google homepage.'
+            url_g = 'https://www.google.com/'
+
+        else:
+            url_g = searchObj.group(1)
+        # do not append query here; the purpose of -l is to access first link of results
+
     elif argList.images == True:
         baseURL = 'https://www.google.com'
         source = getSource(url_g)
@@ -222,41 +234,6 @@ def determineURL(argList):
 
     # additional options here
 
-def handleLucky(argList):
-    '''
-    The --lucky argument is a special case that conflicts with some arguments and not others, so it must be handled manually.
-    '''
-    global url_g
-    if argList.lucky == True:
-        source = getSource(url_g)
-
-        if argList.youtube == True:
-            searchObj = re.search( r'<h3 class="yt-lockup-title"><a href="(/watch\?v=.*?)"', source) # get first occurrence of a YouTube result and capture its URL
-
-            if not searchObj:
-                print 'Warning: no luck in getting first result.'
-
-            else:
-                url_g = 'https://www.youtube.com' + searchObj.group(1) # only video hash is captured, so it must be appended on the base YouTube URL
-
-        elif argList.images == True:
-            searchObj = re.search( r'"id":"(.*?):"', source) # get first occurrence of a Google Images result and capture its URL
-
-            if not searchObj:
-                pass # warning already covered by determineURL()
-
-            else:
-                url_g += '#imgrc=' + searchObj.group(1)
-
-        else: # default to first link of Google results
-            searchObj = re.search( r'<h3 class="r"><a href="(.*?)"', source) # get first occurrence of a Google result and capture its URL
-
-            if not searchObj:
-                print 'Warning: no luck in getting first result.'
-
-            else:
-                url_g = searchObj.group(1)
-
 def main():
     '''
     Driver function for pls
@@ -266,7 +243,6 @@ def main():
     initParser()
     determineBrowser(parser_g.parse_args())
     determineURL(parser_g.parse_args())
-    handleLucky(parser_g.parse_args())
     debugPrint(url_g)
 
     subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
