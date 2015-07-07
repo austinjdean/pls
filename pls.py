@@ -82,16 +82,41 @@ def initParser():
             help='Open a randomly selected xkcd comic',
             action='store_true')
 
+def which(program): # thanks: http://stackoverflow.com/questions/377017/test-if-executable-exists-in-python
+    def is_exe(fpath):
+        return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if is_exe(program):
+            return program
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            path = path.strip('"')
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file):
+                return exe_file
+
+    return None
+
 def determineBrowser(argList):
     '''
     Sets global browser variable; the default value (xdg-open) is initialized with the global variable, so it is not specified here.
     '''
     global browser_g
     if argList.chrome == True:
-        browser_g = 'google-chrome'
+        if not which('google-chrome'):
+            print 'Google Chrome is not installed.'
+            exit(1)
+        else:
+            browser_g = 'google-chrome'
 
     elif argList.firefox == True:
-        browser_g = 'firefox'
+        if not which('firefox'):
+            print 'Firefox is not installed.'
+            exit(1)
+        else:
+            browser_g = 'firefox'
 
 def getQuery():
     '''
