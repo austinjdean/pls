@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import sys, subprocess, os, re, urllib2, argparse, random
-# Global variables - _g suffix indicates global status
 
+# Global variables - _g suffix indicates global status
 url_g = 'https://www.google.com/search?q=' # default to standard google search
 browser_g = 'xdg-open' # use system default as default browser
 parser_g = argparse.ArgumentParser(epilog='Special characters (*, ", $, etc.) must be escaped using \, and search terms do not need to be enclosed in quotes.') # global argument parser
@@ -45,7 +45,7 @@ def initParser():
             help='Search using Google Images',
             action='store_true')
     flagArgGroup.add_argument(
-            '-s',
+            '-S',
             '--scholar',
             help='Search using Google Scholar',
             action='store_true')
@@ -60,10 +60,9 @@ def initParser():
             help='Search using Google Video',
             action='store_true')
     flagArgGroup.add_argument(
-            '-y',
-            '--youtube',
-            help='Search using YouTube',
-            action='store_true')
+            '-s',
+            '--site',
+            help='Search a specific website')
     flagArgGroup.add_argument(
             '-m',
             '--sass',
@@ -155,8 +154,6 @@ def determineURL(argList):
 
     query = getQuery() # query to be appended to URL in some cases
 
-    url_g += query # default to standard Google search
-
     if argList.scholar == True:
         url_g = 'https://scholar.google.com/scholar?q=' + query
         # append query here to show Google results page with given query
@@ -174,19 +171,8 @@ def determineURL(argList):
         # do not append query here; the purpose of -l is to access first link of results
 
     elif argList.images == True:
-        baseURL = 'https://www.google.com'
-        source = getSource(url_g)
-        searchObj = re.search( r'<a class="q qs" href="([^"]*)">Images</a>', source)
-
-        if not searchObj:
-            print 'Warning: no search terms detected. Defaulting to Google Images homepage.'
-            url_g = 'https://images.google.com/'
-
-        else:
-            imgHash = searchObj.group(1)
-            imgHash = imgHash.replace('&amp;', '&')
-            url_g = baseURL + imgHash
-        # do not append query here; Google Images has a more complex URL, which is handled by the above logic
+        url_g = 'https://www.google.com/search?tbm=isch&q=' + query
+        # append query here to display image results with given query
 
     elif argList.sass == True:
         url_g = 'http://www.lmgtfy.com/?q=' + query
@@ -209,10 +195,6 @@ def determineURL(argList):
         # url_g = 'https://xkcd.com/4/' # guaranteed to be random
         url_g = 'http://c.xkcd.com/random/comic/'
 
-    elif argList.youtube == True:
-        url_g = 'https://www.youtube.com/results?search_query=' + query
-        # append query here to display youtube results with given query
-
     elif argList.news == True:
         url_g = 'https://www.google.com/search?tbm=nws&q=' + query
         # append query here to display news results with given query
@@ -220,7 +202,14 @@ def determineURL(argList):
     elif argList.video == True:
         url_g = 'https://www.google.com/#tbm=vid&q=' + query
 
+    elif argList.site:
+        query += '+site:' + argList.site
+        url_g += query
+
     # additional options here
+
+    else: # default to standard Google search
+        url_g += query
 
 def debugPrint(string):
     if parser_g.parse_args().debug == True: # check arguments for -d flag
