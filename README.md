@@ -45,6 +45,6 @@ Python utility to search Google from the Linux command line
 `git checkout develop`  
 `git pull`  
 - Read up on this branching model: http://nvie.com/posts/a-successful-git-branching-model/
-- Most importantly, develop features on branches checked out from `develop`, and merge them back in when they're stable
-- Once `develop` is stable, it gets merged with `master` as a new version
+- Most importantly, develop features on your local `develop` branch, and push your changes to the remote when they're stable
+- Once `develop` is stable, it gets merged into `master` as a new version
 - The idea is that `master` will always represent a production-ready state
