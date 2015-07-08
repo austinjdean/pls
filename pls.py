@@ -7,18 +7,6 @@ url_g = 'https://www.google.com/search?q=' # default to standard google search
 browser_g = 'xdg-open' # use system default as default browser
 parser_g = argparse.ArgumentParser(epilog='Special characters (*, ", $, etc.) must be escaped using \, and search terms do not need to be enclosed in quotes.') # global argument parser
 
-# utility functions
-def trueCount(boolList):
-    count = 0 # number of true items in the list
-    for current in boolList:
-        if current == True:
-            count += 1
-    return count
-
-def debugPrint(string):
-    if parser_g.parse_args().debug == True: # check arguments for -d flag
-        print string
-
 # register arguments with the parser
 def initParser():
     '''
@@ -47,11 +35,6 @@ def initParser():
             help='Open using Firefox',
             action='store_true')
     flagArgGroup.add_argument(
-            '-s',
-            '--scholar',
-            help='Search using Google Scholar',
-            action='store_true')
-    flagArgGroup.add_argument(
             '-l',
             '--lucky',
             help='I\'m Feeling Lucky',
@@ -62,14 +45,29 @@ def initParser():
             help='Search using Google Images',
             action='store_true')
     flagArgGroup.add_argument(
-            '-m',
-            '--sass',
-            help='Increase sass - search using Let Me Google That For You',
+            '-s',
+            '--scholar',
+            help='Search using Google Scholar',
+            action='store_true')
+    flagArgGroup.add_argument(
+            '-n',
+            '--news',
+            help='Search using Google News',
+            action='store_true')
+    flagArgGroup.add_argument(
+            '-v',
+            '--video',
+            help='Search using Google Video',
             action='store_true')
     flagArgGroup.add_argument(
             '-y',
             '--youtube',
             help='Search using YouTube',
+            action='store_true')
+    flagArgGroup.add_argument(
+            '-m',
+            '--sass',
+            help='Increase sass - search using Let Me Google That For You',
             action='store_true')
     flagArgGroup.add_argument(
             '-r',
@@ -82,16 +80,41 @@ def initParser():
             help='Open a randomly selected xkcd comic',
             action='store_true')
 
+def which(program): # thanks: http://stackoverflow.com/questions/377017/test-if-executable-exists-in-python
+    def is_exe(fpath):
+        return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if is_exe(program):
+            return program
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            path = path.strip('"')
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file):
+                return exe_file
+
+    return None
+
 def determineBrowser(argList):
     '''
     Sets global browser variable; the default value (xdg-open) is initialized with the global variable, so it is not specified here.
     '''
     global browser_g
     if argList.chrome == True:
-        browser_g = 'google-chrome'
+        if not which('google-chrome'):
+            print 'Google Chrome is not installed.'
+            exit(1)
+        else:
+            browser_g = 'google-chrome'
 
     elif argList.firefox == True:
-        browser_g = 'firefox'
+        if not which('firefox'):
+            print 'Firefox is not installed.'
+            exit(1)
+        else:
+            browser_g = 'firefox'
 
 def getQuery():
     '''
@@ -190,7 +213,18 @@ def determineURL(argList):
         url_g = 'https://www.youtube.com/results?search_query=' + query
         # append query here to display youtube results with given query
 
+    elif argList.news == True:
+        url_g = 'https://www.google.com/search?tbm=nws&q=' + query
+        # append query here to display news results with given query
+
+    elif argList.video == True:
+        url_g = 'https://www.google.com/#tbm=vid&q=' + query
+
     # additional options here
+
+def debugPrint(string):
+    if parser_g.parse_args().debug == True: # check arguments for -d flag
+        print string
 
 def main():
     '''

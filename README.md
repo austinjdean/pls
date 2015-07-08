@@ -20,11 +20,13 @@ Python utility to search Google from the Linux command line
 -d, --debug     Debug flag - print the URL that pls will open
 -c, --chrome    Open using Chrome
 -f, --firefox   Open using Firefox
--s, --scholar   Search using Google Scholar
 -l, --lucky     I'm Feeling Lucky
 -i, --images    Search using Google Images
--m, --sass      Increase sass - search using Let Me Google That For You
+-s, --scholar   Search using Google Scholar
+-n, --news      Search using Google News
+-v, --video     Search using Google Video
 -y, --youtube   Search using YouTube
+-m, --sass      Increase sass - search using Let Me Google That For You
 -r, --simpsons  Open a randomly selected Simpsons episode
 -x, --xkcd      Open a randomly selected xkcd comic
 ```
