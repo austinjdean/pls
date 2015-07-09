@@ -80,6 +80,9 @@ def initParser():
             action='store_true')
 
 def which(program): # thanks: http://stackoverflow.com/questions/377017/test-if-executable-exists-in-python
+    '''
+    Function to determine whether a program exists
+    '''
     def is_exe(fpath):
         return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
 
@@ -102,18 +105,18 @@ def determineBrowser(argList):
     '''
     global browser_g
     if argList.chrome == True:
-        if not which('google-chrome'):
+        if which('google-chrome'):
+            browser_g = 'google-chrome'
+        else:
             print 'Google Chrome is not installed.'
             exit(1)
-        else:
-            browser_g = 'google-chrome'
 
     elif argList.firefox == True:
-        if not which('firefox'):
+        if which('firefox'):
+            browser_g = 'firefox'
+        else:
             print 'Firefox is not installed.'
             exit(1)
-        else:
-            browser_g = 'firefox'
 
 def getQuery():
     '''
