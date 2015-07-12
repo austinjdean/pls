@@ -29,9 +29,10 @@ Python utility to search Google from the Linux command line
 -i, --images          Search using Google Images
 -S, --scholar         Search using Google Scholar
 -n, --news            Search using Google News
+-m, --maps            Search using Google Maps
 -v, --video           Search using Google Video
 -s SITE, --site SITE  Search a specific website
--m, --sass            Increase sass - search using Let Me Google That For
+-L, --sass            Increase sass - search using Let Me Google That For
                       You
 -r, --simpsons        Open a randomly selected Simpsons episode
 -x, --xkcd            Open a randomly selected xkcd comic

@@ -55,6 +55,11 @@ def initParser():
             help='Search using Google News',
             action='store_true')
     flagArgGroup.add_argument(
+            '-m',
+            '--maps',
+            help='Search using Google Maps',
+            action='store_true')
+    flagArgGroup.add_argument(
             '-v',
             '--video',
             help='Search using Google Video',
@@ -64,7 +69,7 @@ def initParser():
             '--site',
             help='Search a specific website')
     flagArgGroup.add_argument(
-            '-m',
+            '-L',
             '--sass',
             help='Increase sass - search using Let Me Google That For You',
             action='store_true')
@@ -209,6 +214,9 @@ def determineURL(argList):
     elif argList.site:
         query += '+site:' + argList.site
         url_g += query
+
+    elif argList.maps:
+        url_g = 'https://www.google.com/maps?q=' + query
 
     # additional options here
 
