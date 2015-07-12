@@ -162,6 +162,7 @@ def determineURL(argList):
         # append query here to show Google results page with given query
 
     elif argList.lucky == True:
+        url_g += query
         source = getSource(url_g)
         searchObj = re.search( r'<h3 class="r"><a href="(.*?)"', source) # get first occurrence of a result and capture its URL
 
