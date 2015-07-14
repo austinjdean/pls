@@ -16,10 +16,10 @@ Python utility to search Google from the Linux command line
 
 `sudo ant clean`
 
-##### Usage:
+### Usage:
 `pls [options] [search terms]`
 
-##### Options:
+### Options:
 ```
 -h, --help            show this help message and exit
 -d, --debug           Debug flag - print the URL that pls will open
@@ -38,10 +38,10 @@ Python utility to search Google from the Linux command line
 -x, --xkcd            Open a randomly selected xkcd comic
 ```
 
-##### Notes:
-- Search terms do not need to be enclosed in quotes.
-- If building with `ant` fails, try using `sudo`.
-- Any special characters (`*`, `"`, `$`, etc.) will be consumed by the shell before the script can even get its hands on them. To use these literal characters in a search query, escape them with `\`.
+#### Notes:
+- Search terms do not need to be enclosed in quotes
+- If building with `ant` fails, try using `sudo`
+- Any special characters (`*`, `"`, `$`, etc.) will be consumed by the shell before the script can even get its hands on them. To use these literal characters in a search query, escape them with `\`
 
 #### To-do list:
 - See the [Issues Page](https://github.com/austinjdean/pls/issues)
