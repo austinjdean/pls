@@ -172,8 +172,7 @@ def determineURL(argList):
         searchObj = re.search( r'<h3 class="r"><a href="(.*?)"', source) # get first occurrence of a result and capture its URL
 
         if not searchObj:
-            print 'Warning: no search terms detected. Defaulting to Google homepage.'
-            url_g = 'https://www.google.com/'
+            print 'Warning: no luck finding links from which to grab the first.'
 
         else:
             url_g = searchObj.group(1)
