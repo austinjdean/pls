@@ -4,7 +4,7 @@ Python utility to search Google from the Linux command line
 ### Dependencies:
 
 - Python 2.x
-- ant (only for installation/removal)
+- Ant (only for installation/removal)
 
 ### Installation:
 
