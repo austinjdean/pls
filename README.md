@@ -16,6 +16,12 @@ Python utility to search Google from the Linux command line
 
 `sudo ant clean`
 
+##### Installation Notes:
+
+- Updating `pls` (i.e. pulling the latest into your local `pls` directory) does not require reinstallation
+- Relocating your local `pls` directory does - the symlink needs to point to the new location
+	- This can be done with `sudo ant clean install`
+
 ### Usage:
 `pls [options] [search terms]`
 
