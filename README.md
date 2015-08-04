@@ -31,6 +31,8 @@ Python utility to search Google from the Linux command line
 -d, --debug           Debug flag - print the URL that pls will open
 -c, --chrome          Open using Chrome
 -f, --firefox         Open using Firefox
+-t, --text            Display results in stdout instead of showing them in
+                      browser
 -l, --lucky           I'm Feeling Lucky
 -i, --images          Search using Google Images
 -S, --scholar         Search using Google Scholar

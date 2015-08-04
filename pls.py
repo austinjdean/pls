@@ -35,6 +35,11 @@ def initParser():
             help='Open using Firefox',
             action='store_true')
     flagArgGroup.add_argument(
+            '-t',
+            '--text',
+            help='Display results in stdout instead of showing them in browser',
+            action='store_true')
+    flagArgGroup.add_argument(
             '-l',
             '--lucky',
             help='I\'m Feeling Lucky',
@@ -162,11 +167,11 @@ def determineURL(argList):
 
     query = getQuery() # query to be appended to URL in some cases
 
-    if argList.scholar == True:
+    if argList.scholar:
         url_g = 'https://scholar.google.com/scholar?q=' + query
         # append query here to show Google results page with given query
 
-    elif argList.lucky == True:
+    elif argList.lucky:
         url_g += query
         source = getSource(url_g)
         searchObj = re.search( r'<h3 class="r"><a href="(.*?)"', source) # get first occurrence of a result and capture its URL
@@ -178,15 +183,15 @@ def determineURL(argList):
             url_g = searchObj.group(1)
         # do not append query here; the purpose of -l is to access first link of results
 
-    elif argList.images == True:
+    elif argList.images:
         url_g = 'https://www.google.com/search?tbm=isch&q=' + query
         # append query here to display image results with given query
 
-    elif argList.sass == True:
+    elif argList.sass:
         url_g = 'http://www.lmgtfy.com/?q=' + query
         # append query here to pass search terms to LMGTFY
 
-    elif argList.simpsons == True:
+    elif argList.simpsons:
         seasonSelect = 'http://projectfreetv.so/free/the-simpsons/'
         source = getSource(seasonSelect)
         searchObj = re.findall( r'<a href="(http://projectfreetv.so/free/the-simpsons/the-simpsons-season-\d+/)" ?>', source)
@@ -199,15 +204,15 @@ def determineURL(argList):
 
         url_g = episodeURL
 
-    elif argList.xkcd == True:
+    elif argList.xkcd:
         # url_g = 'https://xkcd.com/4/' # guaranteed to be random
         url_g = 'http://c.xkcd.com/random/comic/'
 
-    elif argList.news == True:
+    elif argList.news:
         url_g = 'https://www.google.com/search?tbm=nws&q=' + query
         # append query here to display news results with given query
 
-    elif argList.video == True:
+    elif argList.video:
         url_g = 'https://www.google.com/#tbm=vid&q=' + query
 
     elif argList.site:
@@ -216,6 +221,16 @@ def determineURL(argList):
 
     elif argList.maps:
         url_g = 'https://www.google.com/maps?q=' + query
+
+    elif argList.text:
+        url_g += query
+        source = getSource(url_g)
+        # print source
+        searchObj =  re.findall( r'<h3 class="r"><a href="(.*?)"[^>]*>(.*?)</a>', source) # get all occurrences of a result and capture URL and link title
+        for result in searchObj:
+            print result[1]
+            print result[0]
+            print
 
     # additional options here
 
@@ -237,8 +252,9 @@ def main():
     determineURL(parser_g.parse_args())
     debugPrint(url_g)
 
-    subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
-    # thanks: http://stackoverflow.com/questions/11269575/how-to-hide-output-of-subprocess-in-python-2-7
+    if not parser_g.parse_args().text:
+        subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
+        # thanks: http://stackoverflow.com/questions/11269575/how-to-hide-output-of-subprocess-in-python-2-7
 
 if __name__ == '__main__':
     main()
