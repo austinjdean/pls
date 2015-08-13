@@ -22,7 +22,7 @@ def initParser():
     parser_g.add_argument(
             '-d',
             '--debug',
-            help='Debug flag - print the URL that pls will open',
+            help='Print the target URL instead of opening it',
             action='store_true')
     browserArgGroup.add_argument(
             '-c',
@@ -252,7 +252,7 @@ def main():
     determineURL(parser_g.parse_args())
     debugPrint(url_g)
 
-    if not parser_g.parse_args().text:
+    if not (parser_g.parse_args().text or parser_g.parse_args().debug):
         subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
         # thanks: http://stackoverflow.com/questions/11269575/how-to-hide-output-of-subprocess-in-python-2-7
 
