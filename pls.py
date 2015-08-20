@@ -253,6 +253,8 @@ def main():
     debugPrint(url_g)
 
     print os.environ['DISPLAY']
+    print os.environ['SSH_CLIENT']
+    print os.environ['SSH_TTY']
 
     # if not (parser_g.parse_args().text or parser_g.parse_args().debug):
         # subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
