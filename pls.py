@@ -252,8 +252,10 @@ def main():
     determineURL(parser_g.parse_args())
     debugPrint(url_g)
 
-    if not (parser_g.parse_args().text or parser_g.parse_args().debug):
-        subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
+    print os.environ['DISPLAY']
+
+    # if not (parser_g.parse_args().text or parser_g.parse_args().debug):
+        # subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
         # thanks: http://stackoverflow.com/questions/11269575/how-to-hide-output-of-subprocess-in-python-2-7
 
 if __name__ == '__main__':
