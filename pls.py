@@ -261,8 +261,12 @@ def main():
     try:
         if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
             print 'we\'re over ssh'
+            print argList.debug
+            argList.debug = True
+            print argList.debug
     except Exception, e:
         print 'we\'re not over ssh'
+        pass
 
     # if not (parser_g.parse_args().text or parser_g.parse_args().debug):
         # subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
