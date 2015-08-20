@@ -252,15 +252,16 @@ def main():
     determineURL(parser_g.parse_args())
     debugPrint(url_g)
 
-    print os.environ['DISPLAY']
+    # print os.environ['DISPLAY']
     # print os.environ['SSH_CLIENT']
     # print os.environ['SSH_TTY']
 
-    client, tty = os.environ['SSH_CLIENT'], os.environ['SSH_TTY']
+    # client, tty = os.environ['SSH_CLIENT'], os.environ['SSH_TTY']
 
-    if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
-        print 'we\'re over ssh'
-    else:
+    try:
+        if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
+            print 'we\'re over ssh'
+    except Exception, e:
         print 'we\'re not over ssh'
 
     # if not (parser_g.parse_args().text or parser_g.parse_args().debug):
