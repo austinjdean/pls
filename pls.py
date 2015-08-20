@@ -262,13 +262,14 @@ def main():
     # parser_g.parse_args().debug = True
     # print parser_g.parse_args().debug
 
-    try:
-        if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
-            print 'pls thinks it\'s over ssh right now - try -d or -t'
-            exit(2)
-    except Exception, e:
-        # print 'we\'re not over ssh'
-        pass
+    if parser_g.parse_args().text or parser_g.parse_args().debug:
+        try:
+            if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
+                print 'pls thinks it\'s over ssh right now - try -d or -t'
+                exit(2)
+        except Exception, e:
+            # print 'we\'re not over ssh'
+            pass
 
     if not (parser_g.parse_args().text or parser_g.parse_args().debug):
         subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
