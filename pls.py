@@ -261,9 +261,6 @@ def main():
     try:
         if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
             print 'we\'re over ssh'
-            print argList.debug
-            argList.debug = True
-            print argList.debug
     except Exception, e:
         print 'we\'re not over ssh'
         pass
