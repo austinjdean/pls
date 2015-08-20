@@ -252,33 +252,13 @@ def main():
     determineURL(parser_g.parse_args())
     debugPrint(url_g)
 
-    # print os.environ['DISPLAY']
-    # print os.environ['SSH_CLIENT']
-    # print os.environ['SSH_TTY']
-
-    # client, tty = os.environ['SSH_CLIENT'], os.environ['SSH_TTY']
-
-    # print parser_g.parse_args().debug
-    # parser_g.parse_args().debug = True
-    # print parser_g.parse_args().debug
-
-    # if not parser_g.parse_args().text or parser_g.parse_args().debug:
-    #     try:
-    #         if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
-    #             print 'pls thinks it\'s over ssh right now - try -d or -t'
-    #             exit(2)
-    #     except Exception, e:
-    #         # print 'we\'re not over ssh'
-    #         pass
-
     if not (parser_g.parse_args().text or parser_g.parse_args().debug):
         try:
             if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
-                print 'pls thinks it\'s over ssh right now - try -d or -t'
+                print 'pls thinks it\'s over ssh right now - try -d or -t (-h for help)'
                 print 'If you\'re not over ssh, send expletives to austinjdean@gmail.com'
                 exit(2)
-        except Exception, e:
-            # print 'we\'re not over ssh'
+        except Exception, e: # not over ssh
             pass
 
         subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
