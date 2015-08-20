@@ -258,15 +258,19 @@ def main():
 
     # client, tty = os.environ['SSH_CLIENT'], os.environ['SSH_TTY']
 
+    # print parser_g.parse_args().debug
+    # parser_g.parse_args().debug = True
+    # print parser_g.parse_args().debug
+
     try:
         if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
-            print 'we\'re over ssh'
+            print 'pls thinks it\'s over ssh right now - try -d or -t'
     except Exception, e:
-        print 'we\'re not over ssh'
+        # print 'we\'re not over ssh'
         pass
 
-    # if not (parser_g.parse_args().text or parser_g.parse_args().debug):
-        # subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
+    if not (parser_g.parse_args().text or parser_g.parse_args().debug):
+        subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
         # thanks: http://stackoverflow.com/questions/11269575/how-to-hide-output-of-subprocess-in-python-2-7
 
 if __name__ == '__main__':
