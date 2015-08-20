@@ -275,6 +275,7 @@ def main():
         try:
             if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
                 print 'pls thinks it\'s over ssh right now - try -d or -t'
+                print 'If you\'re not over ssh, send expletives to austinjdean@gmail.com'
                 exit(2)
         except Exception, e:
             # print 'we\'re not over ssh'
