@@ -258,6 +258,11 @@ def main():
 
     client, tty = os.environ['SSH_CLIENT'], os.environ['SSH_TTY']
 
+    if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
+        print 'we\'re over ssh'
+    else:
+        print 'we\'re not over ssh'
+
     # if not (parser_g.parse_args().text or parser_g.parse_args().debug):
         # subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
         # thanks: http://stackoverflow.com/questions/11269575/how-to-hide-output-of-subprocess-in-python-2-7
