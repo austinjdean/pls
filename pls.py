@@ -24,6 +24,11 @@ def initParser():
             '--debug',
             help='Print the target URL instead of opening it',
             action='store_true')
+    parser_g.add_argument(
+            '-F',
+            '--force',
+            help='Force pls to attempt to open in browser',
+            action='store_true')
     browserArgGroup.add_argument(
             '-c',
             '--chrome',
@@ -257,7 +262,8 @@ def main():
             if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
                 print 'pls thinks it\'s over ssh right now - try -d or -t (-h for help)'
                 print 'If you\'re not over ssh, send expletives to austinjdean@gmail.com'
-                exit(2)
+                if not parser_g.parse_args().force:
+                    exit(2)
         except Exception, e: # not over ssh
             pass
 

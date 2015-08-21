@@ -28,7 +28,8 @@ Python utility to search Google from the Linux command line
 ### Options:
 ```
 -h, --help            show this help message and exit
--d, --debug           Debug flag - print the URL that pls will open
+-d, --debug           Print the target URL instead of opening it
+-F, --force           Force pls to attempt to open in browser
 -c, --chrome          Open using Chrome
 -f, --firefox         Open using Firefox
 -t, --text            Display results in stdout instead of showing them in
