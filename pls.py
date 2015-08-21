@@ -262,7 +262,7 @@ def main():
             try:
                 if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
                     print 'pls thinks it\'s over ssh right now. Try:'
-                    print '-F to force pls to attempt to open in browser'
+                    print '-F to force pls to attempt to open in browser (might hang terminal)'
                     print '-d to print the URL pls would access instead of opening it'
                     print '-t to display Google results in the terminal'
                     print '-h for help'
