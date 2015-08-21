@@ -266,7 +266,7 @@ def main():
                 print '-t to display Google results in the terminal'
                 print '-h for help'
                 print 'If you\'re not over ssh and still see this, send expletives to'
-                print 'austinjdean@gmail.com or submit an issue: https://github.com/austinjdean/pls/issues'
+                print 'austinjdean@gmail.com or submit an issue: github.com/austinjdean/pls/issues'
                 if not parser_g.parse_args().force:
                     exit(2)
         except Exception, e: # not over ssh
