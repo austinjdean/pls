@@ -257,7 +257,7 @@ def main():
     determineURL(parser_g.parse_args())
     debugPrint(url_g)
 
-    if not (parser_g.parse_args().text or parser_g.parse_args().debug):
+    if not (parser_g.parse_args().text or parser_g.parse_args().debug or parser_g.parse_args().force):
         try:
             if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
                 print 'pls thinks it\'s over ssh right now. Try:'
@@ -267,8 +267,7 @@ def main():
                 print '-h for help'
                 print 'If you\'re not over ssh, send expletives to austinjdean@gmail.com,'
                 print 'or submit an issue: https://github.com/austinjdean/pls/issues'
-                if not parser_g.parse_args().force:
-                    exit(2)
+                exit(2)
         except Exception, e: # not over ssh
             pass
 
