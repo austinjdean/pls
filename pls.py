@@ -272,8 +272,15 @@ def main():
             except Exception, e: # not over ssh
                 pass
 
-        subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
-        # thanks: http://stackoverflow.com/questions/11269575/how-to-hide-output-of-subprocess-in-python-2-7
+        try:
+            subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
+            # thanks: http://stackoverflow.com/questions/11269575/how-to-hide-output-of-subprocess-in-python-2-7
+        except KeyboardInterrupt:
+            print 'Exiting by user request'
+            try:
+                sys.exit(0)
+            except SystemExit:
+                os._exit(0)
 
 if __name__ == '__main__':
     main()
