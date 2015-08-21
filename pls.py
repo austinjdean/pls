@@ -257,19 +257,20 @@ def main():
     determineURL(parser_g.parse_args())
     debugPrint(url_g)
 
-    if not (parser_g.parse_args().text or parser_g.parse_args().debug or parser_g.parse_args().force):
-        try:
-            if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
-                print 'pls thinks it\'s over ssh right now. Try:'
-                print '-F to force pls to attempt to open in browser'
-                print '-d to print the URL pls would access instead of opening it'
-                print '-t to display Google results in the terminal'
-                print '-h for help'
-                print 'If you\'re not over ssh, send expletives to austinjdean@gmail.com,'
-                print 'or submit an issue: https://github.com/austinjdean/pls/issues'
-                exit(2)
-        except Exception, e: # not over ssh
-            pass
+    if not (parser_g.parse_args().text or parser_g.parse_args().debug):
+        if not parser_g.parse_args().force:
+            try:
+                if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
+                    print 'pls thinks it\'s over ssh right now. Try:'
+                    print '-F to force pls to attempt to open in browser'
+                    print '-d to print the URL pls would access instead of opening it'
+                    print '-t to display Google results in the terminal'
+                    print '-h for help'
+                    print 'If you\'re not over ssh, send expletives to austinjdean@gmail.com,'
+                    print 'or submit an issue: https://github.com/austinjdean/pls/issues'
+                    exit(2)
+            except Exception, e: # not over ssh
+                pass
 
         subprocess.call([browser_g, url_g], stdout=DEVNULL, stderr=subprocess.STDOUT) # shhhh - redirect browser output to /dev/null
         # thanks: http://stackoverflow.com/questions/11269575/how-to-hide-output-of-subprocess-in-python-2-7
