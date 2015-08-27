@@ -137,12 +137,7 @@ def getQuery():
 	'''
 	Gets the query string that will be appended to the appropriate URL.
 	'''
-	query = ''
-	terms = parser_g.parse_args().terms # don't need to declare global parser_g because we're not editing the variable here - just reading from it
-	for term in terms:
-		query += term
-		query += '+'
-	query = query[:-1] # remove final '+' added by for loop
+	query = '+'.join(parser_g.parse_args().terms) # thanks: https://www.reddit.com/r/Drexel/comments/3hv00r/psa_cs_students_im_making_something_i_hope_youll/cubkrrs
 	return query
 
 def internetOn(): # thanks: http://stackoverflow.com/questions/3764291/checking-network-connection
