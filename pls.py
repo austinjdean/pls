@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys, subprocess, os, re, urllib2, argparse, random
+import sys, subprocess, os, re, urllib2, argparse, random, textwrap
 
 # Global variables - _g suffix indicates global status
 url_g = 'https://www.google.com/search?q=' # default to standard google search
@@ -42,8 +42,13 @@ def initParser():
 	flagArgGroup.add_argument(
 			'-t',
 			'--text',
-			help='Display results in stdout instead of showing them in browser',
+			help='Display results in the terminal instead of showing them in browser',
 			action='store_true')
+	flagArgGroup.add_argument(
+			'-w',
+			'--word',
+			help='Show syllable segmentation, pronunciation, and definition of WORD in the terminal',
+			nargs='*')
 	flagArgGroup.add_argument(
 			'-l',
 			'--lucky',
@@ -81,7 +86,7 @@ def initParser():
 	flagArgGroup.add_argument(
 			'-L',
 			'--sass',
-			help='Increase sass - search using Let Me Google That For You',
+			help='Increase sass - open "Let Me Google That For You" URL',
 			action='store_true')
 	flagArgGroup.add_argument(
 			'-r',
@@ -231,12 +236,46 @@ def determineURL(argList):
 	elif argList.text:
 		url_g += query
 		source = getSource(url_g)
-		# print source
 		searchObj =  re.findall( r'<h3 class="r"><a href="(.*?)"[^>]*>(.*?)</a>', source) # get all occurrences of a result and capture URL and link title
 		for result in searchObj:
 			print result[1]
 			print result[0]
 			print
+
+	elif argList.word: # todo: account for multiple definitions
+		url_g += 'define+'
+		url_g += '+'.join(argList.word)
+		source = getSource(url_g)
+		try: # isolate syllables and pronunciation becuase it's okay if we don't have those. Only fail for real if the definition is missing.
+			try:
+				syllables = re.search( r'<span data-dobid="hdw">(.*?)</span>', source)
+				pronunciation = re.search( r'<span class="lr_dct_ph"><span>(.*?)</span>', source)
+			except Exception, e:
+				pass
+			definition = re.search( r'data-dobid="dfn"><span>(.*?)</span></div>', source)
+
+			try:
+				syllables = syllables.group(1)
+				pronunciation = pronunciation.group(1)
+			except Exception, e:
+				pass
+			definition = definition.group(1)
+
+			definition = re.sub(r'<[^>]*>', '', definition) # remove formatting tags
+
+			try:
+				if syllables:
+					print syllables
+				if pronunciation:
+					print pronunciation
+			except Exception, e:
+				pass
+
+			print textwrap.fill(definition)
+
+		except Exception, e:
+			print 'Couldn\'t find definition for "' + ' '.join(argList.word) + '."'
+			exit(1)
 
 	# additional options here
 
@@ -258,7 +297,7 @@ def main():
 	determineURL(parser_g.parse_args())
 	debugPrint(url_g)
 
-	if not (parser_g.parse_args().text or parser_g.parse_args().debug):
+	if not (parser_g.parse_args().text or parser_g.parse_args().debug or parser_g.parse_args().word):
 		if not parser_g.parse_args().force:
 			try:
 				if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:

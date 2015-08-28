@@ -32,8 +32,10 @@ Python utility to search Google from the Linux command line
 -F, --force           Force pls to attempt to open in browser
 -c, --chrome          Open using Chrome
 -f, --firefox         Open using Firefox
--t, --text            Display results in stdout instead of showing them in
-                      browser
+-t, --text            Display results in the terminal instead of showing
+                      them in browser
+-w WORD, --word WORD  Show syllable segmentation, pronunciation, and
+                      definition of WORD in the terminal
 -l, --lucky           I'm Feeling Lucky
 -i, --images          Search using Google Images
 -S, --scholar         Search using Google Scholar
@@ -41,8 +43,7 @@ Python utility to search Google from the Linux command line
 -m, --maps            Search using Google Maps
 -v, --video           Search using Google Video
 -s SITE, --site SITE  Search a specific website
--L, --sass            Increase sass - search using Let Me Google That For
-                      You
+-L, --sass            Increase sass - open "Let Me Google That For You" URL
 -r, --simpsons        Open a randomly selected Simpsons episode
 -x, --xkcd            Open a randomly selected xkcd comic
 ```
