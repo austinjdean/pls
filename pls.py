@@ -237,7 +237,7 @@ def determineURL(argList):
 			print result[0]
 			print
 
-	elif argList.word: # todo: account for multiple definitions
+	elif argList.word: # todo: account for multiple definitions, such as "shoot"
 		url_g += 'define+'
 		url_g += '+'.join(argList.word)
 		source = getSource(url_g)
