@@ -240,6 +240,7 @@ def determineURL(argList):
 	elif argList.word: # todo: account for multiple definitions, such as "shoot"
 		url_g += 'define+'
 		url_g += '+'.join(argList.word)
+		url_g = url_g.replace(' ', '+') # if user used quotes, account for spaces
 		source = getSource(url_g)
 		try: # isolate syllables and pronunciation becuase it's okay if we don't have those. Only fail for real if the definition is missing.
 			try:
