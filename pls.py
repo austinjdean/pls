@@ -143,6 +143,8 @@ def getQuery():
 	Gets the query string that will be appended to the appropriate URL.
 	'''
 	query = '+'.join(parser_g.parse_args().terms) # thanks: https://www.reddit.com/r/Drexel/comments/3hv00r/psa_cs_students_im_making_something_i_hope_youll/cubkrrs
+	query = query.strip()
+	query = query.replace(' ', '+') # if user used quotes, account for spaces
 	return query
 
 def internetOn(): # thanks: http://stackoverflow.com/questions/3764291/checking-network-connection
@@ -178,17 +180,7 @@ def determineURL(argList):
 		# append query here to show Google results page with given query
 
 	elif argList.lucky:
-		# http://www.google.com/search?sourceid=navclient&gfns=1&q=
-		url_g += query
-		source = getSource(url_g)
-		searchObj = re.search( r'<h3 class="r"><a href="(.*?)"', source) # get first occurrence of a result and capture its URL
-
-		if not searchObj:
-			print 'Warning: no luck finding links from which to grab the first.'
-
-		else:
-			url_g = searchObj.group(1)
-		# do not append query here; the purpose of -l is to access first link of results
+		url_g = 'http://www.google.com/search?sourceid=navclient&gfns=1&q=' + query
 
 	elif argList.images:
 		url_g = 'https://www.google.com/search?tbm=isch&q=' + query
@@ -293,7 +285,7 @@ def main():
 	initParser()
 	determineBrowser(parser_g.parse_args())
 	determineURL(parser_g.parse_args())
-	url_g = url_g.replace(' ', '+') # if user used quotes, account for spaces
+	# url_g = url_g.replace(' ', '+') # if user used quotes, account for spaces (line shouldn't be encessary, but I'm leaving it in case we run into trouble)
 	debugPrint(url_g)
 
 	if not (parser_g.parse_args().text or parser_g.parse_args().debug or parser_g.parse_args().word):
