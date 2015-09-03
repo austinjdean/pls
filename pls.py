@@ -178,6 +178,7 @@ def determineURL(argList):
 		# append query here to show Google results page with given query
 
 	elif argList.lucky:
+		# http://www.google.com/search?sourceid=navclient&gfns=1&q=
 		url_g += query
 		source = getSource(url_g)
 		searchObj = re.search( r'<h3 class="r"><a href="(.*?)"', source) # get first occurrence of a result and capture its URL
@@ -240,7 +241,6 @@ def determineURL(argList):
 	elif argList.word: # todo: account for multiple definitions, such as "shoot"
 		url_g += 'define+'
 		url_g += '+'.join(argList.word)
-		url_g = url_g.replace(' ', '+') # if user used quotes, account for spaces
 		source = getSource(url_g)
 		try: # isolate syllables and pronunciation becuase it's okay if we don't have those. Only fail for real if the definition is missing.
 			try:
@@ -287,11 +287,13 @@ def main():
 	'''
 	Driver function for pls
 	'''
+	global url_g
 	DEVNULL = open(os.devnull, 'w')
 
 	initParser()
 	determineBrowser(parser_g.parse_args())
 	determineURL(parser_g.parse_args())
+	url_g = url_g.replace(' ', '+') # if user used quotes, account for spaces
 	debugPrint(url_g)
 
 	if not (parser_g.parse_args().text or parser_g.parse_args().debug or parser_g.parse_args().word):
