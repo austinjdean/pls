@@ -180,7 +180,16 @@ def determineURL(argList):
 		# append query here to show Google results page with given query
 
 	elif argList.lucky:
-		url_g = 'http://www.google.com/search?sourceid=navclient&gfns=1&q=' + query
+		url_g += query
+		source = getSource(url_g)
+		searchObj = re.search( r'<h3 class="r"><a href="(.*?)"', source) # get first occurrence of a result and capture its URL
+
+		if not searchObj:
+			print 'Warning: no luck finding links from which to grab the first.'
+
+		else:
+			url_g = searchObj.group(1)
+		# do not append query here; the purpose of -l is to access first link of results
 
 	elif argList.images:
 		url_g = 'https://www.google.com/search?tbm=isch&q=' + query
