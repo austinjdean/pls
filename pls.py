@@ -168,6 +168,7 @@ def getSource(url):
 def removeHTML(source): # sanitize extracted source for presentation in the terminal
 	source = re.sub(r'<[^>]*>', '', source) # remove formatting tags
 	source = source.replace('&quot;', '"')
+	source = source.replace('&nbsp;', ' ')
 	source = source.replace('&#39;', '\'')
 	# further replacements that need to be made should be added here.
 	return source
@@ -257,7 +258,7 @@ def determineURL(argList):
 				pronunciation = re.search( r'<span class="lr_dct_ph"><span>(.*?)</span>', source)
 			except Exception, e:
 				pass
-			definition = re.search( r'(<span class="_Tgc">(.*?)</span><span)|(data-dobid="dfn"><span>(.*?)</span></div>)', source)
+			definition = re.search( r'(<span class="_Tgc">(.*?)</span>)|(data-dobid="dfn"><span>(.*?)</span></div>)', source)
 
 			try:
 				syllables = syllables.group(1)
