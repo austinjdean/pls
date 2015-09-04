@@ -234,20 +234,25 @@ def determineURL(argList):
 		url_g += 'define+'
 		url_g += '+'.join(argList.word)
 		source = getSource(url_g)
+
 		try: # isolate syllables and pronunciation becuase it's okay if we don't have those. Only fail for real if the definition is missing.
 			try:
 				syllables = re.search( r'<span data-dobid="hdw">(.*?)</span>', source)
 				pronunciation = re.search( r'<span class="lr_dct_ph"><span>(.*?)</span>', source)
 			except Exception, e:
 				pass
-			definition = re.search( r'data-dobid="dfn"><span>(.*?)</span></div>', source)
+			definition = re.search( r'(<span class="_Tgc">(.*?)</span><span)|(data-dobid="dfn"><span>(.*?)</span></div>)', source)
 
 			try:
 				syllables = syllables.group(1)
 				pronunciation = pronunciation.group(1)
 			except Exception, e:
 				pass
-			definition = definition.group(1)
+
+			if definition.group(4):
+				definition = definition.group(4)
+			elif definition.group(2):
+				definition = definition.group(2)
 
 			definition = re.sub(r'<[^>]*>', '', definition) # remove formatting tags
 
