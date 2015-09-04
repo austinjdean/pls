@@ -89,6 +89,11 @@ def initParser():
 			help='Increase sass - open "Let Me Google That For You" URL',
 			action='store_true')
 	flagArgGroup.add_argument(
+			'-C',
+			'--curious',
+			help='Open a random fact from Google',
+			action='store_true')
+	flagArgGroup.add_argument(
 			'-r',
 			'--simpsons',
 			help='Open a randomly selected Simpsons episode',
@@ -287,6 +292,9 @@ def determineURL(argList):
 			errorMessage = 'Couldn\'t find definition for "' + ' '.join(argList.word) + '."'
 			print textwrap.fill(errorMessage)
 			exit(1)
+
+	elif argList.curious:
+		url_g = 'https://www.google.com/search?q=I%27m+feeling+curious'
 
 	# additional options here
 
