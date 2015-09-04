@@ -165,6 +165,13 @@ def getSource(url):
 	source = urllib2.urlopen(req).read() # get html source
 	return source
 
+def removeHTML(source): # sanitize extracted source for presentation in the terminal
+	source = re.sub(r'<[^>]*>', '', source) # remove formatting tags
+	source = source.replace('&quot;', '"')
+	source = source.replace('&#39;', '\'')
+	# further replacements that need to be made should be added here.
+	return source
+
 def determineURL(argList):
 	'''
 	Sets global URL (e.g. to search Images, Scholar, LMGTFY, etc.) given the corresponding flag.
@@ -263,7 +270,7 @@ def determineURL(argList):
 			elif definition.group(2):
 				definition = definition.group(2)
 
-			definition = re.sub(r'<[^>]*>', '', definition) # remove formatting tags
+			definition = removeHTML(definition)
 
 			try:
 				if syllables:
