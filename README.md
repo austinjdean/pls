@@ -34,7 +34,8 @@ Python utility to search Google from the Linux command line
 -f, --firefox         Open using Firefox
 -t, --text            Display results in the terminal instead of showing
                       them in browser
--w WORD, --word WORD  Show syllable segmentation, pronunciation, and
+-w [WORD [WORD ...]], --word [WORD [WORD ...]]
+                      Show syllable segmentation, pronunciation, and
                       definition of WORD in the terminal
 -l, --lucky           I'm Feeling Lucky
 -i, --images          Search using Google Images
@@ -44,6 +45,7 @@ Python utility to search Google from the Linux command line
 -v, --video           Search using Google Video
 -s SITE, --site SITE  Search a specific website
 -L, --sass            Increase sass - open "Let Me Google That For You" URL
+-C, --curious         Open a random fact from Google
 -r, --simpsons        Open a randomly selected Simpsons episode
 -x, --xkcd            Open a randomly selected xkcd comic
 ```
