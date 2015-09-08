@@ -106,7 +106,7 @@ def initParser():
 
 def debugPrint(string):
 	if parser_g.parse_args().debug: # check arguments for -d flag
-		print string
+		print textwrap.fill(string)
 
 def safeExit(status):
 	debugPrint(url_g)
@@ -256,8 +256,8 @@ def determineURL(argList):
 		source = getSource(url_g)
 		searchObj =  re.findall( r'<h3 class="r"><a href="(.*?)"[^>]*>(.*?)</a>', source) # get all occurrences of a result and capture URL and link title
 		for result in searchObj:
-			print result[1]
-			print result[0]
+			print textwrap.fill(result[1])
+			print textwrap.fill(result[0])
 			print
 
 	elif argList.word: # todo: account for multiple definitions, such as "shoot"
