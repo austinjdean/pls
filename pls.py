@@ -319,6 +319,7 @@ def main():
 	initParser()
 	determineBrowser(parser_g.parse_args())
 	determineURL(parser_g.parse_args())
+	debugPrint(url_g)
 
 	if not (parser_g.parse_args().text or parser_g.parse_args().debug or parser_g.parse_args().word):
 		if not parser_g.parse_args().force:
