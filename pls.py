@@ -104,6 +104,14 @@ def initParser():
 			help='Open a randomly selected xkcd comic',
 			action='store_true')
 
+def debugPrint(string):
+	if parser_g.parse_args().debug: # check arguments for -d flag
+		print string
+
+def safeExit(status):
+	debugPrint(url_g)
+	exit(status)
+
 def which(program): # thanks: http://stackoverflow.com/questions/377017/test-if-executable-exists-in-python
 	'''
 	Function to determine whether a program exists
@@ -134,14 +142,14 @@ def determineBrowser(argList):
 			browser_g = 'google-chrome'
 		else:
 			print 'Google Chrome is not installed.'
-			exit(1)
+			safeExit(1)
 
 	elif argList.firefox == True:
 		if which('firefox'):
 			browser_g = 'firefox'
 		else:
 			print 'Firefox is not installed.'
-			exit(1)
+			safeExit(1)
 
 def getQuery():
 	'''
@@ -162,7 +170,7 @@ def internetOn(): # thanks: http://stackoverflow.com/questions/3764291/checking-
 def exitIfNoInternet():
 	if not internetOn():
 		print 'Problem connecting to the internet.'
-		exit(64) # exit code 64 means machine is not on the network
+		safeExit(64) # exit code 64 means machine is not on the network
 
 def getSource(url):
 	# thanks: http://stackoverflow.com/questions/30580639/cant-get-python-to-download-webpage-source-code-browser-version-not-supported
@@ -291,7 +299,7 @@ def determineURL(argList):
 		except Exception, e:
 			errorMessage = 'Couldn\'t find definition for "' + ' '.join(argList.word) + '."'
 			print textwrap.fill(errorMessage)
-			exit(1)
+			safeExit(1)
 
 	elif argList.curious:
 		url_g = 'https://www.google.com/search?q=I%27m+feeling+curious'
@@ -300,10 +308,6 @@ def determineURL(argList):
 
 	else: # default to standard Google search
 		url_g += query
-
-def debugPrint(string):
-	if parser_g.parse_args().debug == True: # check arguments for -d flag
-		print string
 
 def main():
 	'''
@@ -315,8 +319,6 @@ def main():
 	initParser()
 	determineBrowser(parser_g.parse_args())
 	determineURL(parser_g.parse_args())
-	# url_g = url_g.replace(' ', '+') # if user used quotes, account for spaces (line shouldn't be encessary, but I'm leaving it in case we run into trouble)
-	debugPrint(url_g)
 
 	if not (parser_g.parse_args().text or parser_g.parse_args().debug or parser_g.parse_args().word):
 		if not parser_g.parse_args().force:
@@ -329,7 +331,7 @@ def main():
 					print '-h for help'
 					print 'If you\'re not over ssh, send expletives to austinjdean@gmail.com,'
 					print 'or submit an issue: https://github.com/austinjdean/pls/issues'
-					exit(2)
+					safeExit(2)
 			except Exception, e: # not over ssh
 				pass
 
