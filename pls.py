@@ -183,6 +183,8 @@ def removeHTML(source): # sanitize extracted source for presentation in the term
 	source = source.replace('&quot;', '"')
 	source = source.replace('&nbsp;', ' ')
 	source = source.replace('&#39;', '\'')
+	source = source.replace('&lt;', '<')
+	source = source.replace('&gt;', '>')
 	# further replacements that need to be made should be added here.
 	return source
 
