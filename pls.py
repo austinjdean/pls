@@ -258,8 +258,8 @@ def determineURL(argList):
 		source = getSource(url_g)
 		searchObj =  re.findall( r'<h3 class="r"><a href="(.*?)"[^>]*>(.*?)</a>', source) # get all occurrences of a result and capture URL and link title
 		for result in searchObj:
-			print textwrap.fill(result[1])
-			print textwrap.fill(result[0])
+			print removeHTML(textwrap.fill(result[1]))
+			print removeHTML(textwrap.fill(result[0]))
 			print
 
 	elif argList.word: # todo: account for multiple definitions, such as "shoot"
