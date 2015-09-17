@@ -137,6 +137,12 @@ def determineBrowser(argList):
 	Sets global browser variable; the default value (xdg-open) is initialized with the global variable, so it is not specified here.
 	'''
 	global browser_g
+
+	if not which(browser_g):
+		print 'No browser detected.'
+		# print suggestions for terminal options
+		safeExit(1)
+
 	if argList.chrome == True:
 		if which('google-chrome'):
 			browser_g = 'google-chrome'
