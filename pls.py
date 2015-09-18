@@ -132,6 +132,13 @@ def which(program): # thanks: http://stackoverflow.com/questions/377017/test-if-
 
 	return None
 
+def printTextOptions(reason):
+	print reason + '. Try:'
+	print '-F to force pls to attempt to open in browser (might hang terminal)'
+	print '-d to print the URL pls would access instead of opening it'
+	print '-t to display Google results in the terminal'
+	print '-h for help'
+
 def determineBrowser(argList):
 	'''
 	Sets global browser variable; the default value (xdg-open) is initialized with the global variable, so it is not specified here.
@@ -139,8 +146,7 @@ def determineBrowser(argList):
 	global browser_g
 
 	if not which(browser_g):
-		print 'No browser detected.'
-		# print suggestions for terminal options
+		printTextOptions('No browser detected')
 		safeExit(1)
 
 	if argList.chrome == True:
@@ -338,11 +344,7 @@ def main():
 		if not parser_g.parse_args().force:
 			try:
 				if os.environ['SSH_CLIENT'] or os.environ['SSH_TTY']:
-					print 'pls thinks it\'s over ssh right now. Try:'
-					print '-F to force pls to attempt to open in browser (might hang terminal)'
-					print '-d to print the URL pls would access instead of opening it'
-					print '-t to display Google results in the terminal'
-					print '-h for help'
+					printTextOptions('pls thinks it\'s over ssh right now')
 					print 'If you\'re not over ssh, send expletives to austinjdean@gmail.com,'
 					print 'or submit an issue: https://github.com/austinjdean/pls/issues'
 					safeExit(2)
