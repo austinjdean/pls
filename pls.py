@@ -1,5 +1,19 @@
 #!/usr/bin/env python
 
+#
+#	pls
+#
+#	Author: Austin Dean
+#
+#	Date Started: June 17th 2015
+#
+#	Description:
+#
+#		pls is a command line utility that sends search terms to Google.
+#		Results are interpreted and displayed (in either the terminal
+#		or in a web browser) according to user-provided options.
+#
+
 import sys, subprocess, os, re, urllib2, argparse, random, textwrap
 
 # Global variables - _g suffix indicates global status
