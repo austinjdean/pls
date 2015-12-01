@@ -13,6 +13,10 @@
 #		Results are interpreted and displayed (in either the terminal
 #		or in a web browser) according to user-provided options.
 #
+#	Alias to report how many times pls has been run:
+#
+#		alias howmanypls='grep ": [0-9]\{10\}:[0-9];pls" $HISTFILE | wc -l'
+#
 
 import sys, subprocess, os, re, urllib2, argparse, random, textwrap
 
