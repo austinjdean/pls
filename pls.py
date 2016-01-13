@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 #
 #	pls
@@ -67,6 +68,11 @@ def initParser():
 			'--word',
 			help='Show syllable segmentation, pronunciation, and definition of WORD in the terminal',
 			nargs='*')
+	flagArgGroup.add_argument(
+			'-T',
+			'--temperature',
+			help='Get a brief summary of local temperature and sky conditions',
+			action='store_true')
 	flagArgGroup.add_argument(
 			'-l',
 			'--lucky',
@@ -340,6 +346,19 @@ def determineURL(argList):
 
 	elif argList.curious:
 		url_g = 'https://www.google.com/search?q=I%27m+feeling+curious'
+
+	elif argList.temperature:
+		url_g = 'https://www.google.com/search?q=weather'
+		source = getSource(url_g)
+
+		temps = re.search(r'<span class="wob_t" id="wob_tm" style="display:inline">(-?\d+)</span><span class="wob_t" id="wob_ttm" style="display:none">(-?\d+)</span>', source)
+		sky = re.search(r'<div id="wob_dcp"><span class="vk_gy vk_sh" id="wob_dc">(.*?)</span></div>', source)
+
+		far = temps.group(1)
+		cel = temps.group(2)
+		sky = sky.group(1)
+
+		print cel + ' °C (' + far + ' °F), ' + sky
 
 	# additional options here
 
