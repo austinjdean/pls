@@ -359,6 +359,7 @@ def determineURL(argList):
 		sky = sky.group(1)
 
 		print cel + ' °C (' + far + ' °F), ' + sky
+		safeExit(0)
 
 	# additional options here
 
