@@ -37,6 +37,8 @@ Python utility to search Google from the Linux command line
 -w [WORD [WORD ...]], --word [WORD [WORD ...]]
                       Show syllable segmentation, pronunciation, and
                       definition of WORD in the terminal
+-T, --temperature     Get a brief summary of local temperature and sky
+                      conditions
 -l, --lucky           I'm Feeling Lucky
 -i, --images          Search using Google Images
 -S, --scholar         Search using Google Scholar
