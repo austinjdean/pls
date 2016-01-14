@@ -59,7 +59,7 @@ def initParser():
 			help='Open using Firefox',
 			action='store_true')
 	flagArgGroup.add_argument(
-			'-t',
+			'-T',
 			'--text',
 			help='Display results in the terminal instead of showing them in browser',
 			action='store_true')
@@ -69,7 +69,7 @@ def initParser():
 			help='Show syllable segmentation, pronunciation, and definition of WORD in the terminal',
 			nargs='*')
 	flagArgGroup.add_argument(
-			'-T',
+			'-t',
 			'--temperature',
 			help='Get a brief summary of local temperature and sky conditions',
 			action='store_true')
