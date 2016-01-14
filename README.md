@@ -32,12 +32,12 @@ Python utility to search Google from the Linux command line
 -F, --force           Force pls to attempt to open in browser
 -c, --chrome          Open using Chrome
 -f, --firefox         Open using Firefox
--t, --text            Display results in the terminal instead of showing
+-T, --text            Display results in the terminal instead of showing
                       them in browser
 -w [WORD [WORD ...]], --word [WORD [WORD ...]]
                       Show syllable segmentation, pronunciation, and
                       definition of WORD in the terminal
--T, --temperature     Get a brief summary of local temperature and sky
+-t, --temperature     Get a brief summary of local temperature and sky
                       conditions
 -l, --lucky           I'm Feeling Lucky
 -i, --images          Search using Google Images
