@@ -297,10 +297,15 @@ def determineURL(argList):
 	elif argList.text:
 		url_g += query
 		source = getSource(url_g)
-		searchObj =  re.findall( r'<h3 class="r"><a href="(.*?)"[^>]*>(.*?)</a>', source) # get all occurrences of a result and capture URL and link title
-		for result in searchObj:
+		urlTitleDesc =  re.findall( r'<h3 class="r"><a href="(.*?)"[^>]*>(.*?)</a>.*?<span class="st">(<span class="f">.+?</span>)?(.+?)</span>', source) # get all occurrences of a result and capture URL, link title, and brief description
+		for result in urlTitleDesc:
 			print removeHTML(textwrap.fill(result[1]))
-			print removeHTML(textwrap.fill(result[0]))
+			print removeHTML(result[0])
+			for character in result[0]: # make a divider as long as the URL
+				sys.stdout.write('=') # thanks: http://stackoverflow.com/a/4348063/2929868
+				sys.stdout.flush()
+			print
+			print removeHTML(textwrap.fill(result[3]))
 			print
 
 	elif argList.word: # todo: account for multiple definitions, such as "shoot"
