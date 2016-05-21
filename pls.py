@@ -198,7 +198,7 @@ def getQuery():
 
 def internetOn(): # thanks: http://stackoverflow.com/questions/3764291/checking-network-connection
 	try:
-		response = urllib2.urlopen('http://google.com/', timeout = 1)
+		response = urllib2.urlopen('http://172.217.4.206', timeout = 2)
 		return True
 	except urllib2.URLError as err: pass
 	return False
@@ -235,7 +235,7 @@ def determineURL(argList):
 	'''
 	global url_g
 
-	exitIfNoInternet()
+	# exitIfNoInternet() # commented this line because it caused problems on slow connections
 
 	query = getQuery() # query to be appended to URL in some cases
 
