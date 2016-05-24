@@ -4,23 +4,23 @@ Python utility to search Google from the Linux command line
 ### Dependencies:
 
 - Python 2.x
-- Ant (only for installation/removal)
+- Make (only for installation/removal)
 
 ### Installation:
 
-##### Use ant:
+##### Use make:
 
-`sudo ant install`
+`make install`
 
 ##### Removal:
 
-`sudo ant clean`
+`make clean`
 
 ##### Installation Notes:
 
 - Updating `pls` (i.e. pulling the latest into your local `pls` directory) does not require reinstallation
 - Relocating your local `pls` directory does - the symlink needs to point to the new location
-	- This can be done with `sudo ant clean install`
+	- This can be done with `make clean install`
 
 ### Usage:
 `pls [options] [search terms]`
@@ -54,7 +54,6 @@ Python utility to search Google from the Linux command line
 
 #### Notes:
 - Search terms do not need to be enclosed in quotes
-- If building with `ant` fails, try using `sudo`
 - Any special characters (`*`, `"`, `$`, etc.) will be consumed by the shell before the script can even get its hands on them. To use these literal characters in a search query, escape them with `\`
 
 #### To-do list:
