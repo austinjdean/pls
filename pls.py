@@ -301,9 +301,12 @@ def determineURL(argList):
 		for result in urlTitleDesc:
 			print removeHTML(textwrap.fill(result[1]))
 			print removeHTML(result[0])
-			for character in result[0]: # make a divider as long as the URL
-				sys.stdout.write('=') # thanks: http://stackoverflow.com/a/4348063/2929868
-				sys.stdout.flush()
+			if len(result[0]) > 70:
+				print '======================================================================' # 70 = signs
+			else:
+				for character in result[0]: # make a divider as long as the URL as long as it's short enough
+					sys.stdout.write('=') # thanks: http://stackoverflow.com/a/4348063/2929868
+					sys.stdout.flush()
 			print
 			print removeHTML(textwrap.fill(result[3]))
 			print
