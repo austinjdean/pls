@@ -170,8 +170,8 @@ def determineBrowser(argList):
 	global browser_g
 
 	if not which(browser_g):
-		printTextOptions('No browser detected')
-		safeExit(1)
+		printTextOptions('Warning: no browser detected')
+		# safeExit(1)
 
 	if argList.chrome == True:
 		if which('google-chrome'):
