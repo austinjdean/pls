@@ -346,6 +346,7 @@ def determineURL(argList):
 				pass
 
 			print textwrap.fill(definition)
+			safeExit(0)
 
 		except Exception, e:
 			errorMessage = 'Couldn\'t find definition for "' + ' '.join(argList.word) + '."'
