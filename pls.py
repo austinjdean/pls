@@ -382,9 +382,9 @@ def main():
 	DEVNULL = open(os.devnull, 'w')
 
 	initParser()
-	determineBrowser(parser_g.parse_args())
 	determineURL(parser_g.parse_args())
 	debugPrint(url_g)
+	determineBrowser(parser_g.parse_args())
 
 	if not (parser_g.parse_args().text or parser_g.parse_args().debug or parser_g.parse_args().word):
 		if not parser_g.parse_args().force:
