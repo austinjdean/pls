@@ -214,8 +214,9 @@ def getSource(url):
 	try:
 		source = urllib2.urlopen(req).read() # get html source
 	except Exception, e:
-		print 'Can\'t get page source, sorry. Traceback:'
-		raise e
+		print 'Can\'t get page source, sorry.'
+		safeExit(1)
+		# raise e
 	return source
 
 def removeHTML(source): # sanitize extracted source for presentation in the terminal
