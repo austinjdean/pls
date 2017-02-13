@@ -43,6 +43,26 @@ def initParser():
 			'--debug',
 			help='Print the target URL instead of opening it',
 			action='store_true')
+	flagArgGroup.add_argument(
+			'-w',
+			'--word',
+			help='Show syllable segmentation, pronunciation, and definition of WORD in the terminal',
+			nargs='*')
+	flagArgGroup.add_argument(
+			'-l',
+			'--lucky',
+			help='I\'m Feeling Lucky',
+			action='store_true')
+	flagArgGroup.add_argument(
+			'-t',
+			'--temperature',
+			help='Get a brief summary of local temperature and sky conditions',
+			action='store_true')
+	flagArgGroup.add_argument(
+			'-W',
+			'--wiki',
+			help='Get results from Wikipedia',
+			action='store_true')
 	parser_g.add_argument(
 			'-F',
 			'--force',
@@ -62,21 +82,6 @@ def initParser():
 			'-T',
 			'--text',
 			help='Display results in the terminal instead of showing them in browser',
-			action='store_true')
-	flagArgGroup.add_argument(
-			'-w',
-			'--word',
-			help='Show syllable segmentation, pronunciation, and definition of WORD in the terminal',
-			nargs='*')
-	flagArgGroup.add_argument(
-			'-t',
-			'--temperature',
-			help='Get a brief summary of local temperature and sky conditions',
-			action='store_true')
-	flagArgGroup.add_argument(
-			'-l',
-			'--lucky',
-			help='I\'m Feeling Lucky',
 			action='store_true')
 	flagArgGroup.add_argument(
 			'-i',
@@ -131,6 +136,7 @@ def initParser():
 def debugPrint(string):
 	if parser_g.parse_args().debug: # check arguments for -d flag
 		print textwrap.fill(string)
+		exit(0)
 
 def safeExit(status):
 	debugPrint(url_g)
@@ -370,6 +376,10 @@ def determineURL(argList):
 
 		print cel + ' °C (' + far + ' °F), ' + sky
 		safeExit(0)
+
+	elif argList.wiki:
+		url_g = 'https://www.google.com/search?q=site%3Awikipedia.com+'
+		url_g += query
 
 	# additional options here
 
