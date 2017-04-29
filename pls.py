@@ -233,6 +233,13 @@ def removeHTML(source): # sanitize extracted source for presentation in the term
 	source = source.replace('&lt;',		'<')
 	source = source.replace('&gt;',		'>')
 	source = source.replace('&amp;',	'&')
+	source = source.replace('&cent;',	'¢')
+	source = source.replace('&pound;',	'£')
+	source = source.replace('&yen;',	'¥')
+	source = source.replace('&sect;',	'§')
+	source = source.replace('&copy;',	'©')
+	source = source.replace('&reg;',	'®')
+	source = source.replace('&trade;',	'™')
 	# further replacements that need to be made should be added here.
 	return source
 
